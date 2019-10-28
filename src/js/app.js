@@ -58,7 +58,18 @@ var app = new Framework7({
   },
 });
 
-// Login Screen Demo
+// create searchbar
+var searchbar = app.searchbar.create({
+  el: '.searchbar',
+  searchContainer: '.list',
+  searchIn: '.item-title',
+  on: {
+    search(sb, query, previousQuery) {
+      console.log(query, previousQuery);
+    }
+  }
+});
+
 $$('#my-login-screen .login-button').on('click', function () {
   var username = $$('#my-login-screen [name="username"]').val();
   var password = $$('#my-login-screen [name="password"]').val();
@@ -68,14 +79,35 @@ $$('#my-login-screen .login-button').on('click', function () {
 
   // Alert username and password
   app.dialog.alert('Username: ' + username + '<br>Password: ' + password);
+
 });
 
-// 회원가입
 $$('#my-join-screen .join-button').on('click', function () {
 
   // Close login screen
   app.joinScreen.close('#my-join-screen');
 
   // Alert username and password
-  app.dialog.alert('됏음: ');
+  app.dialog.alert('회원가입이 완료되었습니다.');
+});
+
+// Create toast with icon
+var toastIcon = app.toast.create({
+  icon: app.theme === 'ios' ? '<i class="f7-icons">star</i>' : '<i class="material-icons">star</i>',
+  text: 'I\'m with icon',
+  position: 'center',
+  closeTimeout: 2000,
+});
+
+// Open toast
+$$('.open-toast-icon').on('click', function () {
+  toastIcon.open();
+});
+
+// reservation check
+$$(' .rescheck-button').on('click', function () {
+
+  // Alert username and password
+  app.dialog.alert('예약이 완료되었습니다.');
+
 });
