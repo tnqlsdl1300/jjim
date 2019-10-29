@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <!--
-    재빈이거등
     hahahah1234fgfgfgfg
   Customize this policy to fit your own app's needs. For more guidance, see:
       https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
@@ -29,7 +28,7 @@
 <body>
   <div id="app">
     
-    <!-- Left panel with cover effect -->
+    <!-- 왼쪽 패널 메뉴 부분 -->
     <div class="panel panel-left panel-cover theme-dark panel-init" data-visible-breakpoint="960">
       <div class="view view-init" data-view="left">
         <div class="page">
@@ -43,13 +42,13 @@
                 <div class="block block-strong">
                   <div class="row">
                     <div class="col-50">
-                      <a href="#" class="button button-raised button-fill login-screen-open" data-login-screen="#my-login-screen">로그인</a>
+                      <a href="#" class="button button-raised button-fill login-screen-open" data-login-screen=".login-screen">로그인</a>
                       <br>
                       <a href="/form/" data-view=".view-main" class="button button-raised button-fill panel-close">회원가입</a>
                     </div>
                   </div>
                 </div>                
-            <div class="block-title">Left View Navigation</div>
+            <div class="block-title">Left View Navigati on</div>
             <div class="list links-list">
               <ul>
                 <li><a href="/left-page-1/">Left Page 1</a></li>
@@ -104,7 +103,7 @@
       </div>
     </div>
 
-    <!-- Login Screen -->
+    <!-- 로그인 화면 -->
     <div class="login-screen" id="my-login-screen">
       <div class="view">
         <div class="page">
@@ -134,8 +133,47 @@
               <ul>
                 <li>
                   <a href="#" class="item-link list-button login-button">로그인</a>
+                  <a href="#" class="item-link list-button find-button">아이디/비밀번호 찾기</a>
                 </li>
-                <li>
+              </ui>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 아이디/비번 찾기 화면 -->
+    <div class="find-screen" id="my-find-screen">
+        <div class="view">
+          <div class="page">
+            <div class="page-content login-screen-content">
+              <div class="button button-raised button-fill login-screen-open" data-login-screen="#my-login-screen">아이디/비밀번호 찾기</div>
+              <div class="list">
+                <ul>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">이름</div>
+                      <div class="item-input-wrap">
+                        <input type="text" name="username" placeholder="이름을 입력하세요.">
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">이메일</div>
+                      <div class="item-input-wrap">
+                        <input type="password" name="password" placeholder="이메일을 입력하세요.">
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="list">
+                <ul>
+                  <li>
+                    <a href="#" class="item-link list-button login-button">확인</a>
+                  </li>
+                  <li>
                   <!--class 로그인 버튼 부분 바꾸기-->
                   <a href="#" class="item-link list-button">아이디 / 비밀번호 찾기</a>
                 </li>
