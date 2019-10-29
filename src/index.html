@@ -42,9 +42,10 @@
                 <div class="block block-strong">
                   <div class="row">
                     <div class="col-50">
-                      <a href="#" class="button button-raised button-fill login-screen-open" data-login-screen="#my-login-screen">로그인</a>
-                      <br>
-                      <a href="/form/" data-view=".view-main" class="button button-raised button-fill panel-close">회원가입</a>
+                      <a href="#" class="button button-raised button-fill login-screen-open" data-login-screen=".login-screen">로그인</a>
+                    </div>
+                    <div class="col-50">
+                      <a href="/join-screen/" data-view=".view-main" class="button button-raised button-fill">회원가입</a>
                     </div>
                   </div>
                 </div>                
@@ -75,25 +76,26 @@
         </div>
       </div>
     </div>
-  
 
     <!-- Your main view, should have "view-main" class -->
     <div class="view view-main view-init safe-areas" data-url="/"></div>
 
-
-    <!-- Popup -->
-    <div class="join-screen" id="my-join-screen">
+    <!-- Login Screen -->
+    <div class="login-screen" id="my-login-screen">
       <div class="view">
         <div class="page">
           <div class="navbar">
             <div class="navbar-bg"></div>
-            <div class="navbar-inner">
-              <div class="title">Popup</div>
-              <div class="right">
-                <a href="#" class="link popup-close">Close</a>
+            <div class="navbar-inner sliding">
+              <div class="left">
+                <a href="#" class="link login-screen-close">
+                  <i class="icon icon-back"></i>
+                  <span class="if-not-md">Back</span>
+                </a>
               </div>
             </div>
           </div>
+<<<<<<< HEAD
           <div class="page-content">
             <div class="block">
               <p>Popup content goes here.</p>
@@ -107,6 +109,8 @@
     <div class="login-screen" id="my-login-screen">
       <div class="view">
         <div class="page">
+=======
+>>>>>>> b0dc7212ad5b14ac0c6bb42568fcfb110717a867
           <div class="page-content login-screen-content">
             <div class="login-screen-title">찜</div>
             <div class="list">
@@ -183,6 +187,7 @@
         </div>
       </div>
     </div>
+  
   </div>
   <% if (process.env.TARGET === 'cordova') { %>
   <script src="cordova.js"></script>

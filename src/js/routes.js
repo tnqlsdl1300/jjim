@@ -1,7 +1,9 @@
 
 import HomePage from '../pages/home.f7.html';
 import AboutPage from '../pages/about.f7.html';
-import FormPage from '../pages/form.f7.html';
+import JoinPage from '../pages/join-screen.f7.html';
+import BusStopPage from '../pages/busstop.f7.html';
+import ReservationPage from '../pages/reservation.f7.html'
 
 import LeftPage1 from '../pages/left-page-1.f7.html';
 import LeftPage2 from '../pages/left-page-2.f7.html';
@@ -19,10 +21,17 @@ var routes = [
     component: AboutPage,
   },
   {
-    path: '/form/',
-    component: FormPage,
+    path: '/join-screen/',
+    component: JoinPage,
   },
-
+  {
+    path: '/busstop/',
+    component: BusStopPage,
+  },
+  {
+    path: '/reservation/',
+    component: ReservationPage,
+  },
   {
     path: '/left-page-1/',
     component: LeftPage1,

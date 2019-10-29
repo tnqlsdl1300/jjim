@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="page" data-name="home">
     <!-- Top Navbar -->
     <div class="navbar navbar-large">
@@ -14,9 +15,52 @@
         <div class="title sliding">JJIM</div>
         <div class="title-large">
           
+=======
+<div class="page" data-name="home">
+  <!-- Top Navbar -->
+  <div class="navbar navbar">
+    <div class="navbar-bg"></div>
+    <div class="navbar-inner">
+      <div class="left">
+        <a href="#" class="link icon-only panel-open" data-panel="left">
+          <i class="icon f7-icons if-not-md">menu</i>
+          <i class="icon material-icons if-md">menu</i>
+        </a>
+      </div>
+      <!-- Searchbar with auto init -->
+      <form class="searchbar">
+        <div class="searchbar-inner">
+          <div class="searchbar-input-wrap">
+            <input type="search" placeholder="Search">
+            <i class="searchbar-icon"></i>
+            <span class="input-clear-button"></span>
+          </div>
+          <span class="searchbar-disable-button if-not-aurora">Cancel</span>
+          
+        </div>
+        <a class="link popover-open" href="#" data-popover=".popover-search"></a>
+      </form>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="popover popover-search">
+        <div class="popover-inner">
+          <div class="list">
+            <ul>
+              <li><a class="list-button item-link" href="#">Link 1</a></li>
+              <li><a class="list-button item-link" href="#">Link 2</a></li>
+              <li><a class="list-button item-link" href="#">Link 3</a></li>
+              <li><a class="list-button item-link" href="#">Link 4</a></li>
+            </ul>
+          </div>
+>>>>>>> b0dc7212ad5b14ac0c6bb42568fcfb110717a867
         </div>
       </div>
-    </div>
+    <!-- Searchbar backdrop -->
+    <div class="searchbar-backdrop"></div>
+    <a href="/busstop/" data-view=".view-main" class="button button-raised button-fill">버스정류장</a>
+  </div>
+</div>
 </template>
 <script>
 export default {}
