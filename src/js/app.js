@@ -15,7 +15,7 @@ import routes from './routes.js';
 var app = new Framework7({
   root: '#app', // App root element
   id: 'io.framework7.myapp', // App bundle ID
-  name: 'My App', // App name
+  name: '', // App name
   theme: 'auto', // Automatic theme detection
   // App root data
   data: function () {
@@ -58,7 +58,7 @@ var app = new Framework7({
   },
 });
 
-// Login Screen Demo
+// 로그인창 확인 -> 입력 정보 저장
 $$('#my-login-screen .login-button').on('click', function () {
   var username = $$('#my-login-screen [name="username"]').val();
   var password = $$('#my-login-screen [name="password"]').val();
@@ -70,12 +70,29 @@ $$('#my-login-screen .login-button').on('click', function () {
   app.dialog.alert('Username: ' + username + '<br>Password: ' + password);
 });
 
-// 회원가입
-$$('#my-join-screen .join-button').on('click', function () {
+
+
+// 로그인창 뒤로가기
+$$('#my-login-screen .back-button').on('click', function () {
 
   // Close login screen
-  app.joinScreen.close('#my-join-screen');
+  app.loginScreen.close('#my-login-screen');
+
+});
+
+// 데이터 받기 함수(백업 프로젝트 다이나믹루트 참고))
+$$('#my-find-screen .ok-button').on('click', function () {
+  // Close login screen
+  app.loginScreen.close('#my-login-screen');
 
   // Alert username and password
-  app.dialog.alert('됏음: ');
+  app.dialog.alert('Username: ' + username + '<br>Password: ' + password);
+});
+
+// 아이디 비밀번호 찾기 버튼 페이지 이동을 위한 함수(실패)
+$$('#my-login-screen .find-button').on('click', function () {
+
+  // Close login screen
+  app.loginScreen.open();
+
 });

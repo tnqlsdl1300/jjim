@@ -43,9 +43,10 @@
                   <div class="row">
                     <div class="col-50">
                       <a href="#" class="button button-raised button-fill login-screen-open" data-login-screen=".login-screen">로그인</a>
-                      <br>
-                      <a href="/form/" data-view=".view-main" class="button button-raised button-fill panel-close">회원가입</a>
                     </div>
+                    <div class="col-50">
+                        <a href="/find-login/" data-view=".view-main" class="button button-raised button-fill panel-close">회원가입</a>
+                      </div>
                   </div>
                 </div>                
             <div class="block-title">Left View Navigati on</div>
@@ -107,8 +108,18 @@
     <div class="login-screen" id="my-login-screen">
       <div class="view">
         <div class="page">
+            <div class="navbar">
+                <div class="navbar-bg"></div>
+                <div class="navbar-inner sliding"></div>
+                <div class="left">
+                  <a href="#" class="back-button">
+                    <i class="icon icon-back"></i>
+                    <span class="if-not-md">Back</span>
+                  </a>
+                </div>
+            </div>
           <div class="page-content login-screen-content">
-            <div class="login-screen-title">찜</div>
+            <div class="login-screen-title"></div>
             <div class="list">
               <ul>
                 <li class="item-content item-input">
@@ -133,7 +144,8 @@
               <ul>
                 <li>
                   <a href="#" class="item-link list-button login-button">로그인</a>
-                  <a href="#" class="item-link list-button find-button">아이디/비밀번호 찾기</a>
+                  <!--빝 버튼 안먹힘-->
+                  <a href="#" class="item-link list-button find-button login-screen-open"  data-login-screen="#my-login-screen">아이디/비밀번호 찾기</a>
                 </li>
               </ui>
             </ul>
@@ -142,47 +154,6 @@
       </div>
     </div>
 
-    <!-- 아이디/비번 찾기 화면 -->
-    <div class="find-screen" id="my-find-screen">
-        <div class="view">
-          <div class="page">
-            <div class="page-content login-screen-content">
-              <div class="button button-raised button-fill login-screen-open" data-login-screen="#my-login-screen">아이디/비밀번호 찾기</div>
-              <div class="list">
-                <ul>
-                  <li class="item-content item-input">
-                    <div class="item-inner">
-                      <div class="item-title item-label">이름</div>
-                      <div class="item-input-wrap">
-                        <input type="text" name="username" placeholder="이름을 입력하세요.">
-                      </div>
-                    </div>
-                  </li>
-                  <li class="item-content item-input">
-                    <div class="item-inner">
-                      <div class="item-title item-label">이메일</div>
-                      <div class="item-input-wrap">
-                        <input type="password" name="password" placeholder="이메일을 입력하세요.">
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div class="list">
-                <ul>
-                  <li>
-                    <a href="#" class="item-link list-button login-button">확인</a>
-                  </li>
-                  <li>
-                  <!--class 로그인 버튼 부분 바꾸기-->
-                  <a href="#" class="item-link list-button">아이디 / 비밀번호 찾기</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
   <% if (process.env.TARGET === 'cordova') { %>
   <script src="cordova.js"></script>

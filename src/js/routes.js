@@ -2,6 +2,8 @@
 import HomePage from '../pages/home.f7.html';
 import AboutPage from '../pages/about.f7.html';
 import FormPage from '../pages/form.f7.html';
+import FindLoginPage from '../pages/find-login.f7.html';
+import NewPw from '../pages/new-pw.f7.html';
 
 import LeftPage1 from '../pages/left-page-1.f7.html';
 import LeftPage2 from '../pages/left-page-2.f7.html';
@@ -22,7 +24,14 @@ var routes = [
     path: '/form/',
     component: FormPage,
   },
-
+  {
+    path: '/find-login/',
+    component: FindLoginPage,
+  },
+  {
+    path: '/new-pw/',
+    component: NewPw,
+  },
   {
     path: '/left-page-1/',
     component: LeftPage1,

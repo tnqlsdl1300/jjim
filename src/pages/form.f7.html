@@ -75,12 +75,19 @@
         <!--버튼-->
         <div class="block">
           <p class="row">
-            <a href="#" class="col button">확인</a>
+            <a href="/" class="col button" @click="openAlert">확인</a>
           </p>
         </div>
       </div>
     </div>
     </template>
     <script>
-    export default {};
+    export default {
+      methods: {
+      openAlert: function () {
+        var self = this;
+        self.$app.dialog.alert('회원가입이 완료되었습니다.');
+      }
+    }
+    };
     </script>

@@ -1,0 +1,60 @@
+<template>
+        <div class="page" data-name="new-pw">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+              <div class="left">
+                <a href="#" class="link back">
+                  <i class="icon icon-back"></i>
+                  <span class="if-not-md">Back</span>
+                </a>
+              </div>
+              <div class="title">JJIM</div>
+            </div>
+          </div>
+          <div class="page-content">
+            <!--정보 입력-->
+            <div class="list no-hairlines-md">
+              <ul>
+                <li>
+                  <div class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">새 비밀번호</div>
+                      <div class="item-input-wrap">
+                        <input type="password" placeholder=""/>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">새 비밀번호 확인</div>
+                      <div class="item-input-wrap">
+                        <input type="password" placeholder=""/>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+    
+            <!--버튼-->
+            <div class="block">
+              <p class="row">
+                <a href="/" class="col button" @click="openAlert">확인</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        </template>
+        <script>
+        export default {
+          methods: {
+          openAlert: function () {
+            var self = this;
+            self.$app.dialog.alert('수정.');
+          }
+        }
+        };
+        </script>
