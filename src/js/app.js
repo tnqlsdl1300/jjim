@@ -58,10 +58,12 @@ var app = new Framework7({
   },
 });
 
-<<<<<<< HEAD
+
 // 로그인창 확인 -> 입력 정보 저장
-=======
+
 // create searchbar
+
+
 var searchbar = app.searchbar.create({
   el: '.searchbar',
   searchContainer: '.list',
@@ -73,7 +75,6 @@ var searchbar = app.searchbar.create({
   }
 });
 
->>>>>>> 869941156b6854e1dee6ff938c9a10432b3f8f38
 $$('#my-login-screen .login-button').on('click', function () {
   var username = $$('#my-login-screen [name="username"]').val();
   var password = $$('#my-login-screen [name="password"]').val();
@@ -86,11 +87,15 @@ $$('#my-login-screen .login-button').on('click', function () {
 
 });
 
-<<<<<<< HEAD
-=======
-$$('#my-join-screen .join-button').on('click', function () {
->>>>>>> 869941156b6854e1dee6ff938c9a10432b3f8f38
 
+$$('#my-join-screen .join-button').on('click', function () {
+
+  // Close login screen
+  app.joinScreen.close('#my-join-screen');
+
+  // Alert username and password
+  app.dialog.alert('됏음: ');
+});
 
 // 로그인창 뒤로가기
 $$('#my-login-screen .back-button').on('click', function () {
@@ -106,7 +111,7 @@ $$('#my-find-screen .ok-button').on('click', function () {
   app.loginScreen.close('#my-login-screen');
 
   // Alert username and password
-<<<<<<< HEAD
+
   app.dialog.alert('Username: ' + username + '<br>Password: ' + password);
 });
 
@@ -115,7 +120,7 @@ $$('#my-login-screen .find-button').on('click', function () {
 
   // Close login screen
   app.loginScreen.open();
-=======
+
   app.dialog.alert('회원가입이 완료되었습니다.');
 });
 
@@ -137,6 +142,4 @@ $$(' .rescheck-button').on('click', function () {
 
   // Alert username and password
   app.dialog.alert('예약이 완료되었습니다.');
->>>>>>> 869941156b6854e1dee6ff938c9a10432b3f8f38
-
 });
