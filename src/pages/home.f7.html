@@ -1,22 +1,36 @@
 <template>
   <div class="page" data-name="home">
     <!-- Top Navbar -->
-    <div class="navbar">
+    <div class="navbar navbar">
       <div class="navbar-bg"></div>
-      <div class="navbar-inner sliding">
+      <div class="navbar-inner">
         <div class="left">
           <a href="#" class="link icon-only panel-open" data-panel="left">
             <i class="icon f7-icons if-not-md">menu</i>
             <i class="icon material-icons if-md">menu</i>
           </a>
         </div>
-        <div class="title-large-text login-screen-title">JJIM</div>
-        <div class="title sliding"></div>
-        <div class="title sliding"></div>
-      </div>
+        <!-- Searchbar with auto init -->
+        <form class="searchbar">
+          <div class="searchbar-inner">
+            <div class="searchbar-input-wrap">
+              <input type="search" placeholder="Search">
+              <i class="searchbar-icon"></i>
+              <span class="input-clear-button"></span>
+            </div>
+            <span class="searchbar-disable-button if-not-aurora">Cancel</span>
+            
+          </div>
+          <a class="link popover-open" href="#" data-popover=".popover-search"></a>
+        </form>
       </div>
     </div>
-</template>
-<script>
-export default {}
-</script>
+    <div class="page-content">
+      <!— Searchbar backdrop —>
+      <div class="searchbar-backdrop"></div>
+      <a href="/busstop/" data-view=".view-main" class="button button-raised button-fill">버스정류장</a>
+    </div>
+  </div>
+  </template>
+  <script>
+  export default {}    
