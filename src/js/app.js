@@ -58,7 +58,22 @@ var app = new Framework7({
   },
 });
 
+<<<<<<< HEAD
 // 로그인창 확인 -> 입력 정보 저장
+=======
+// create searchbar
+var searchbar = app.searchbar.create({
+  el: '.searchbar',
+  searchContainer: '.list',
+  searchIn: '.item-title',
+  on: {
+    search(sb, query, previousQuery) {
+      console.log(query, previousQuery);
+    }
+  }
+});
+
+>>>>>>> 869941156b6854e1dee6ff938c9a10432b3f8f38
 $$('#my-login-screen .login-button').on('click', function () {
   var username = $$('#my-login-screen [name="username"]').val();
   var password = $$('#my-login-screen [name="password"]').val();
@@ -68,8 +83,13 @@ $$('#my-login-screen .login-button').on('click', function () {
 
   // Alert username and password
   app.dialog.alert('Username: ' + username + '<br>Password: ' + password);
+
 });
 
+<<<<<<< HEAD
+=======
+$$('#my-join-screen .join-button').on('click', function () {
+>>>>>>> 869941156b6854e1dee6ff938c9a10432b3f8f38
 
 
 // 로그인창 뒤로가기
@@ -86,6 +106,7 @@ $$('#my-find-screen .ok-button').on('click', function () {
   app.loginScreen.close('#my-login-screen');
 
   // Alert username and password
+<<<<<<< HEAD
   app.dialog.alert('Username: ' + username + '<br>Password: ' + password);
 });
 
@@ -94,5 +115,28 @@ $$('#my-login-screen .find-button').on('click', function () {
 
   // Close login screen
   app.loginScreen.open();
+=======
+  app.dialog.alert('회원가입이 완료되었습니다.');
+});
+
+// Create toast with icon
+var toastIcon = app.toast.create({
+  icon: app.theme === 'ios' ? '<i class="f7-icons">star</i>' : '<i class="material-icons">star</i>',
+  text: 'I\'m with icon',
+  position: 'center',
+  closeTimeout: 2000,
+});
+
+// Open toast
+$$('.open-toast-icon').on('click', function () {
+  toastIcon.open();
+});
+
+// reservation check
+$$(' .rescheck-button').on('click', function () {
+
+  // Alert username and password
+  app.dialog.alert('예약이 완료되었습니다.');
+>>>>>>> 869941156b6854e1dee6ff938c9a10432b3f8f38
 
 });
