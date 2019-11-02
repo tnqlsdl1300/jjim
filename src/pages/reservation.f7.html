@@ -1,5 +1,5 @@
 <template>
-<div class="page" data-name="reservation"> 
+<div class="page" data-name="reservation" id="reservation"> 
     <div class="navbar navbar-large">
         <div class="navbar-bg"></div>
         <div class="navbar-inner sliding">
@@ -17,7 +17,7 @@
             <div class="right">
                 <p>
                     <!-- 홈버튼 -->
-                    <a href="/" data-view=".view-main" class="link home">
+                    <a href="/" class="link home">
                         <i class="icon icon-exit"></i>
                         <span class="if-not-md">Home</span>
                     </a>
@@ -26,20 +26,28 @@
         </div>
     </div>
     <div class="page-content">
-        <!-- Timeline -->
-        <div class="info">
-            <!-- 내용 -->
+            <!-- Timeline -->
+            <div class="info">
+                <!-- 내용 -->
+                <div class="block-title block-title-medium">
+                    <p>버스 방향</p>
+                    <p>남은 시간</p>
+                    <p>남은 정거장</p>
+                </div>
+            </div>
+            <div class="block">
+                <a href="/cancel/" class="col button button-raised rescheck-button" @click="openAlert">예약</a>
+            </div>
         </div>
-        <div class="list">
-            <ul>
-                <li>
-                    <a href="#" class="item-link button button-raised rescheck-button">예약</a>
-                </li>
-            </ul>
-        </div>
-    </div>
 </div>
 </template>
 <script>
-    export default {};
+    export default {
+        methods: {
+            openAlert: function () {
+                var self = this;
+                self.$app.dialog.alert('예약이 완료되었습니다.');
+            }
+        }
+    };
 </script>

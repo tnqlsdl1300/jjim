@@ -11,6 +11,23 @@ import '../css/app.css';
 import cordovaApp from './cordova-app.js';
 // Import Routes
 import routes from './routes.js';
+const firebase = require("firebase");
+var firebaseConfig = {
+  apiKey: "AIzaSyA-CggIbVwqZRC4nqbDD3aYjOlGLEiOaWU",
+  authDomain: "jjim-e0f16.firebaseapp.com",
+  databaseURL: "https://jjim-e0f16.firebaseio.com",
+  projectId: "jjim-e0f16",
+  storageBucket: "jjim-e0f16.appspot.com",
+  messagingSenderId: "400499294292",
+  appId: "1:400499294292:web:16bac47867212f69faedc1"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore()
+// db.collection("users").add({
+//   username: "111",
+//   password: "2222"
+// })
 
 var app = new Framework7({
   root: '#app', // App root element
@@ -79,22 +96,16 @@ $$('#my-login-screen .login-button').on('click', function () {
   var username = $$('#my-login-screen [name="username"]').val();
   var password = $$('#my-login-screen [name="password"]').val();
 
+  db.collection("users").add({
+    username: username,
+    password: password
+  })
   // Close login screen
   app.loginScreen.close('#my-login-screen');
 
   // Alert username and password
   app.dialog.alert('Username: ' + username + '<br>Password: ' + password);
 
-});
-
-
-$$('#my-join-screen .join-button').on('click', function () {
-
-  // Close login screen
-  app.joinScreen.close('#my-join-screen');
-
-  // Alert username and password
-  app.dialog.alert('됏음: ');
 });
 
 // 로그인창 뒤로가기

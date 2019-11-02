@@ -16,12 +16,16 @@
             <div class="right">
                 <p>
                     <!-- 즐겨찾기 -->
-                    <a href="#" class="button open-toast-icon">즐겨찾기</a>
+                    <a href="#" class="button open-toast-icon" @click="showToastIcon">
+                        <i class="f7-icons">star</i>
+                        <span class="if-not-md">Star</span>
+                    </a>
                 </p>
+
                 <p>
                     <!-- 홈버튼 -->
                     <a href="/" data-view=".view-main" class="link home">
-                        <i class="icon icon-exit"></i>
+                        <i class="material-icons">home</i>
                         <span class="if-not-md">Home</span>
                     </a>
                 </p>
@@ -33,7 +37,7 @@
         <div class="timeline">
             <!-- Timeline item with Card -->
             <div class="timeline-item">
-                <div class="timeline-item-date">27 <small>DEC</small></div>
+                <div class="timeline-item-date"><small></small></div>
                 <div class="timeline-item-divider"></div>
                 <div class="timeline-item-content card">
                     <a href="/reservation/" data-view=".view-main">
@@ -43,7 +47,7 @@
                 </div>
             </div>
             <div class="timeline-item">
-                <div class="timeline-item-date">27 <small>DEC</small></div>
+                <div class="timeline-item-date"><small></small></div>
                 <div class="timeline-item-divider"></div>
                 <div class="timeline-item-content card">
                     <a href="/reservation/" data-view=".view-main">
@@ -53,7 +57,7 @@
                 </div>
             </div>
             <div class="timeline-item">
-                <div class="timeline-item-date">27 <small>DEC</small></div>
+                <div class="timeline-item-date"><small></small></div>
                 <div class="timeline-item-divider"></div>
                 <div class="timeline-item-content card">
                     <a href="/reservation/" data-view=".view-main">
@@ -63,7 +67,7 @@
                 </div>
             </div>
             <div class="timeline-item">
-                <div class="timeline-item-date">27 <small>DEC</small></div>
+                <div class="timeline-item-date"><small></small></div>
                 <div class="timeline-item-divider"></div>
                 <div class="timeline-item-content card">
                     <a href="/reservation/" data-view=".view-main">
@@ -73,7 +77,7 @@
                 </div>
             </div>
             <div class="timeline-item">
-                <div class="timeline-item-date">27 <small>DEC</small></div>
+                <div class="timeline-item-date"><small></small></div>
                 <div class="timeline-item-divider"></div>
                 <div class="timeline-item-content card">
                     <a href="/reservation/" data-view=".view-main">
@@ -83,7 +87,7 @@
                 </div>
             </div>
             <div class="timeline-item">
-                <div class="timeline-item-date">27 <small>DEC</small></div>
+                <div class="timeline-item-date"><small></small></div>
                 <div class="timeline-item-divider"></div>
                 <div class="timeline-item-content card">
                     <a href="/reservation/" data-view=".view-main">
@@ -93,7 +97,7 @@
                 </div>
             </div>
             <div class="timeline-item">
-                <div class="timeline-item-date">27 <small>DEC</small></div>
+                <div class="timeline-item-date"><small></small></div>
                 <div class="timeline-item-divider"></div>
                 <div class="timeline-item-content card">
                     <a href="/reservation/" data-view=".view-main">
@@ -107,5 +111,37 @@
 </div>
 </template>
 <script>
-    export default {};
+    import { f7Button } from 'framework7';
+    export default {
+        components: {
+        f7Button
+    },
+    methods: {
+        showToastIcon() {
+        const self = this;
+        // Create toast
+        if (!self.toastIcon) {
+          self.toastIcon = self.$f7.toast.create({
+            icon: self.$theme.ios ? '<i class="f7-icons">start</i>' : '<i class="material-icons">start</i>',
+            text: 'I\'m on center',
+            position: 'center',
+            closeTimeout: 2000,
+          });
+        }
+        // Open it
+        self.toastIcon.open();
+      },
+    },
+    on: {
+      pageBeforeOut() {
+        const self = this;
+        self.toast.close();
+      },
+      pageBeforeRemove() {
+        const self = this;
+        // Destroy toasts when page removed
+        if (self.toastIcon) self.toastIcon.destroy();
+      },
+    },
+    };
 </script>

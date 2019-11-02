@@ -15,22 +15,68 @@
           <div class="searchbar-inner">
             <div class="searchbar-input-wrap">
               <input type="search" placeholder="Search">
+              
               <i class="searchbar-icon"></i>
               <span class="input-clear-button"></span>
             </div>
             <span class="searchbar-disable-button if-not-aurora">Cancel</span>
             
           </div>
-          <a class="link popover-open" href="#" data-popover=".popover-search"></a>
+          <!--서치바가 버튼으로 클릭되는 코드 부분-->
+          <!-- <a class="link popover-open" href="#" data-popover=".popover-search"></a> -->
         </form>
       </div>
     </div>
     <div class="page-content">
-      <!— Searchbar backdrop —>
       <div class="searchbar-backdrop"></div>
       <a href="/busstop/" data-view=".view-main" class="button button-raised button-fill">버스정류장</a>
+
+      <div id="map" style="width:500px;height:400px;"></div>
+	
+      <script>
+        var container = document.getElementById('map');
+        var options = {
+          center: new kakao.maps.LatLng(33.450701, 126.570667),
+          level: 3
+        };
+
+        var map = new kakao.maps.Map(container, options);
+      </script>
+
+      
+      <!--교수님 부분 ?-->
+      <!-- <div class="list">
+          <ul>
+            
+            <li class="item-content item-input">
+              <div class="item-media">... icon/image here ...</div>
+              <div class="item-inner">
+                <div class="item-title item-label">Name</div>
+                <div class="item-input-wrap">
+                  <input type="text" name="name">
+                  <span class="input-clear-button"></span>
+                </div>
+              </div>
+            </li>
+            
+          </ul>
+        </div> -->
+    
     </div>
   </div>
   </template>
+
   <script>
-  export default {}    
+    export default {
+      data(){
+        return {
+          name:"aaa"
+        }
+      },
+      methods:{
+        search(){
+          console.log("test")
+        }
+      }
+    };
+  </script>   

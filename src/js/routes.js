@@ -6,9 +6,9 @@ import FormPage from '../pages/form.f7.html';
 import FindLoginPage from '../pages/find-login.f7.html';
 import NewPw from '../pages/new-pw.f7.html';
 
-import JoinPage from '../pages/join-screen.f7.html';
 import BusStopPage from '../pages/busstop.f7.html';
-import ReservationPage from '../pages/reservation.f7.html'
+import ReservationPage from '../pages/reservation.f7.html';
+import CancelPage from '../pages/cancel.f7.html';
 
 
 import LeftPage1 from '../pages/left-page-1.f7.html';
@@ -27,10 +27,6 @@ var routes = [
     component: AboutPage,
   },
   {
-    path: '/join-screen/',
-    component: JoinPage,
-  },
-  {
     path: '/busstop/',
     component: BusStopPage,
   },
@@ -38,7 +34,6 @@ var routes = [
     path: '/reservation/',
     component: ReservationPage,
   },
-
   {
     path: '/find-login/',
     component: FindLoginPage,
@@ -47,10 +42,17 @@ var routes = [
     path: '/new-pw/',
     component: NewPw,
   },
-
   {
     path: '/left-page-1/',
     component: LeftPage1,
+  },
+  {
+    path: '/cancel/',
+    component: CancelPage,
+  },
+  {
+    path: '/form/',
+    component: FormPage,
   },
   {
     path: '/left-page-2/',
