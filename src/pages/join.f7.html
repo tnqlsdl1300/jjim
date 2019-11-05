@@ -1,0 +1,124 @@
+<template>
+  <div class="page" data-name="form">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">회원가입</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block-title">기본정보</div>
+
+      <!--정보 입력-->
+      <form id="joinForm">
+        <div class="list no-hairlines-md">
+          <ul>
+            <li>
+              <div class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">이름</div>
+                  <div class="item-input-wrap">
+                    <input type="text" name="name" placeholder="" />
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">이메일</div>
+                  <div class="item-input-wrap">
+                    <input type="email" name="email" placeholder="E-mail" />
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">비밀번호</div>
+                  <div class="item-input-wrap">
+                    <input type="password" name="password" placeholder="Password" />
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </form>
+
+      <!-- 이용 동의 -->
+      <div class="list">
+        <label class="item-checkbox item-content">
+          <input type="checkbox" name="checkbox" value="agree" />
+          <i class="icon icon-checkbox"></i>
+          <div class="item-inner">
+            <div class="item-title">개인정보 수집 및 이용에 모두 동의 합니다.</div>
+          </div>
+        </label>
+      </div>
+
+      <!-- 로그인 -->
+      <div class="block">
+        <p class="row">
+          <a @click="join" class="col button">확인</a>
+        </p>
+      </div>
+      <!--// 로그인 -->
+
+    </div>
+  </div>
+</template>
+<script>
+  export default {
+    methods: {
+      join: function () {
+        var self = this;
+        var app = self.$app;
+        var joinData = app.form.convertToData('#joinForm');
+
+        if (!joinData.email) {
+          app.dialog.alert('이메일을 입력하세요.');
+        } else if (!joinData.password) {
+           app.dialog.alert('비밀번호를 입력하세요.');
+        } else {
+          // 사용자 등록(이메일, 비밀번호)
+          firebase.auth().createUserWithEmailAndPassword(joinData.email,  joinData.password)
+          .then(function(user) {
+            console.log(user);
+
+            // 사용자 등록(uid, 이름)
+            firebase.firestore().collection("users").add({
+              uid: user.uid,
+              name: joinData.name,
+            })
+            .then(function(docRef) {
+              console.log("Document written with ID: ", docRef.id);
+              app.dialog.alert('회원가입이 완료되었습니다.');
+              app.views.main.router.navigate('/', {
+                  reloadCurrent: true
+              });
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+          }).catch(function(error) {
+            if (error.code == 'auth/invalid-email') {
+              app.dialog.alert('올바른 이메일을 입력하세요.');
+            } 
+            else if (error.code == 'auth/weak-password') {
+              app.dialog.alert('비밀번호는 6자리 이상으로 입력해주세요.');
+            }
+            console.log(error);
+          });
+        }
+      }
+    }
+  };
+</script>

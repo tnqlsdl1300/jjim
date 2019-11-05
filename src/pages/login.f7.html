@@ -1,0 +1,97 @@
+<template>
+    <div class="page">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding"></div>
+            <div class="left">
+                <a href="#" class="link back">
+                    <i class="icon icon-back"></i>
+                    <span class="if-not-md">Back</span>
+                </a>
+            </div>
+        </div>
+        <div class="page-content login-screen-content">
+            <div class="login-screen-title"></div>
+            <form id="loginForm">
+                <div class="list">
+                    <ul>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">사용자 아이디</div>
+                                <div class="item-input-wrap">
+                                    <input type="text" name="email" placeholder="아이디를 입력하세요.">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">비밀번호</div>
+                                <div class="item-input-wrap">
+                                    <input type="password" name="password" placeholder="비밀번호를 입력하세요.">
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+            <div class="list">
+                <ul>
+                    <li>
+                        <a href="#" class="item-link list-button login-button" @click="login">로그인</a>
+                        <a href="/find-login/" class="item-link list-button">아이디/비밀번호 찾기</a>
+                    </li>
+                    </ui>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</template>
+<script>
+    export default {
+        methods: {
+            login: function () {
+                var self = this;
+                var app = self.$app;
+                var loginData = app.form.convertToData('#loginForm');
+
+                if (!loginData.email) {
+                    app.dialog.alert('이메일를 입력하세요.');
+                } else if (!loginData.password) {
+                    app.dialog.alert('비밀번호를 입력하세요.');
+                } else {
+                    firebase.auth().signInWithEmailAndPassword(loginData.email, loginData.password)
+                        // db.collection('users').add({
+                        //     userid: loginData.email,
+                        //     password: loginData.password
+                        // })
+                        .then(function (docRef) {
+                            console.log("Document written with ID: ", docRef.id);
+
+                            app.dialog.alert('로그인이 완료되었습니다.');
+                            app.views.main.router.navigate('/', {
+                                reloadCurrent: true
+                            });
+                        })
+                        .catch(function (error) {
+                            if (error.code == 'auth/user-not-found') {
+                                app.dialog.alert('이메일 / 패스워드를 잘못 입력하였습니다.');
+                            }
+                            console.error("Error adding document: ", error);
+                        });
+
+                    /*
+                    db.collection("users").add({
+                        userid: userid,
+                        password: password
+                    })
+                    app.dialog.alert('로그인이 완료되었습니다.');
+                    app.views.main.router.navigate('/', {
+                        reloadCurrent: true
+                    });
+                    */
+                }
+            }
+        }
+    };
+</script>

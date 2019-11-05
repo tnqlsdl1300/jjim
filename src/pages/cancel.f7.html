@@ -1,12 +1,12 @@
 <template>
-    <div class="page" data-name="cancel" id="cancel"> 
+    <div class="page" data-name="cancel" id="cancel">
         <div class="navbar navbar-large">
             <div class="navbar-bg"></div>
             <div class="navbar-inner sliding">
                 <div class="left">
                     <a href="#" class="link back">
-                    <i class="icon icon-back"></i>
-                    <span class="if-not-md">Back</span>
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
                     </a>
                     <div class="title-small-text">7017</div>
                 </div>
@@ -45,21 +45,21 @@
     </div>
 </template>
 <script>
-    export default {
+    export default {
         methods: {
             openConfirm: function () {
                 var self = this;
-                self.$app.dialog.confirm(
-                // ok, cancel 선택지 alert
-                '정말로 취소하시겠습니까?',
-                //ok 버튼
-                function(){
-                     self.$app.dialog.alert('예약이 취소되었습니다.');
-                },
-                //cancel 버튼
-                function(){
-                    self.$app.dialog.alert('야');
-                }
+                var app = self.$app;
+                app.dialog.confirm(
+                    // ok, cancel 선택지 alert
+                    '정말로 취소하시겠습니까?',
+                    //ok 버튼
+                    function () {
+                        app.dialog.alert('예약이 취소되었습니다.');
+                        app.views.main.router.navigate('/busstop/', {
+                            reloadCurrent: true
+                        });
+                    },
                 );
             }
         }

@@ -101,7 +101,7 @@ $$('#my-login-screen .login-button').on('click', function () {
     password: password
   })
   // Close login screen
-  app.loginScreen.close('#my-login-screen');
+  // app.loginScreen.close('#my-login-screen');
 
   // Alert username and password
   app.dialog.alert('Username: ' + username + '<br>Password: ' + password);

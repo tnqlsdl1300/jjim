@@ -2,7 +2,8 @@
 import HomePage from '../pages/home.f7.html';
 import AboutPage from '../pages/about.f7.html';
 
-import FormPage from '../pages/form.f7.html';
+import LoginPage from '../pages/login.f7.html';
+import JoinPage from '../pages/join.f7.html'; // 회원가입
 import FindLoginPage from '../pages/find-login.f7.html';
 import NewPw from '../pages/new-pw.f7.html';
 
@@ -35,6 +36,10 @@ var routes = [
     component: ReservationPage,
   },
   {
+    path: '/login/',
+    component: LoginPage,
+  },
+  {
     path: '/find-login/',
     component: FindLoginPage,
   },
@@ -51,8 +56,8 @@ var routes = [
     component: CancelPage,
   },
   {
-    path: '/form/',
-    component: FormPage,
+    path: '/join/',
+    component: JoinPage,
   },
   {
     path: '/left-page-2/',
