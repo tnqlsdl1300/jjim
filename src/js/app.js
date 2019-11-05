@@ -130,7 +130,7 @@ $$('#my-find-screen .ok-button').on('click', function () {
 $$('#my-find-screen .find-button').on('click', function () {
 
   // Close login screen
-  //app.loginScreen.open();
+  app.findScreen.open();
 
   app.dialog.alert('회원가입이 완료되었습니다.');
 });

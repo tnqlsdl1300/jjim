@@ -49,11 +49,18 @@
         methods: {
             openConfirm: function () {
                 var self = this;
-                self.$app.dialog.confirm('정말로 취소하시겠습니까?',function(){
-                self.$app.dialog.alert('예약이 취소되었습니다.');
-                },function(){
-                    // self.$app.dialog.alert('취소되었습니다.');
-                });
+                self.$app.dialog.confirm(
+                // ok, cancel 선택지 alert
+                '정말로 취소하시겠습니까?',
+                //ok 버튼
+                function(){
+                     self.$app.dialog.alert('예약이 취소되었습니다.');
+                },
+                //cancel 버튼
+                function(){
+                    self.$app.dialog.alert('야');
+                }
+                );
             }
         }
     };
