@@ -127,10 +127,10 @@ $$('#my-find-screen .ok-button').on('click', function () {
 });
 
 // 아이디 비밀번호 찾기 버튼 페이지 이동을 위한 함수(실패)
-$$('#my-login-screen .find-button').on('click', function () {
+$$('#my-find-screen .find-button').on('click', function () {
 
   // Close login screen
-  app.loginScreen.open();
+  //app.loginScreen.open();
 
   app.dialog.alert('회원가입이 완료되었습니다.');
 });

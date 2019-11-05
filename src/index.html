@@ -21,7 +21,7 @@
   <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5dfbca18213bfab6d3ad3c98653cbc78"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f4148768ab89bccc85c6a59b295637be"></script>
 
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
@@ -57,7 +57,7 @@ function login(){
           <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner sliding">
-              <div class="title">Left Panel</div>
+              <div class="title">정보</div>
             </div>
           </div>
           <div class="page-content">
@@ -71,29 +71,6 @@ function login(){
                       </div>
                   </div>
                 </div>                
-            <div class="block-title">Left View Navigati on</div>
-            <div class="list links-list">
-              <ul>
-                <li><a href="/left-page-1/">Left Page 1</a></li>
-                <li><a href="/left-page-2/">Left Page 2</a></li>
-              </ul>
-            </div>
-            <div class="block-title">Control Main View</div>
-            <div class="list links-list">
-              <ul>
-                <li>
-                  <a href="/about/" data-view=".view-main" class="panel-close">About</a>
-                </li>
-                <li>
-                  <a href="form.f7.html" class="item-content item-link">
-                      form
-                    </a>
-                </li>
-                <li>
-                  <a href="#" data-view=".view-main" class="back panel-close">Back in history</a>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>
@@ -167,7 +144,7 @@ function login(){
                 <li>
                   <a href="#" class="item-link list-button login-button">로그인</a>
                   <!--빝 버튼 안먹힘-->
-                  <a href="#" class="item-link list-button find-button login-screen-open"  data-login-screen="#my-login-screen">아이디/비밀번호 찾기</a>
+                  <a href="#" class="item-link list-button find-button"  data-login-screen="#my-find-screen">아이디/비밀번호 찾기</a>
                 </li>
               </ui>
             </ul>
@@ -176,6 +153,117 @@ function login(){
       </div>
      </div>
     </div>
+
+<!-- 아이디/비번 찾기 화면 -->
+<div class="find-screen" id="my-find-screen">
+  <div class="navbar">
+    <div class="navbar-bg"></div>
+    <div class="navbar-inner">
+      <div class="left">
+        <a href="#" class="link back">
+          <i class="icon icon-back"></i>
+          <span class="if-not-md">Back</span>
+        </a>
+      </div>
+      <div class="title">JJIM</div>
+      <div class="subnavbar">
+          <div class="subnavbar-inner">
+            <div class="segmented segmented-raised">
+              <a class="button tab-link tab-link-active" href="#tab1">아이디</a>
+              <a class="button tab-link" href="#tab2">비밀번호</a>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-content hide-navbar-on-scroll">
+      <div class="tabs">
+        <!--탭1-->
+          <div class="tab tab-active" id="tab1">
+            <div class="block">
+                <br><br>
+                <!--아비 찾기 텍스트는 탭 안으로 넣기-->
+                <div class="login-screen-title">아이디 찾기</div>
+        
+                <!--정보 입력-->
+                <div class="list no-hairlines-md">
+                  <ul>
+                    <li>
+                      <div class="item-content item-input">
+                        <div class="item-inner">
+                          <div class="item-title item-label">이름</div>
+                          <div class="item-input-wrap">
+                            <input type="text" placeholder=""/>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                        <div class="item-content item-input">
+                          <div class="item-inner">
+                            <div class="item-title item-label">이메일</div>
+                            <div class="item-input-wrap">
+                              <input type="email" placeholder=""/>
+                            </div>
+                          </div>
+                        </div>
+                    </li>
+                  </ul>
+                </div>
+                <!--버튼-->
+                <div class="block">
+                  <p class="row">
+                    <a href="#" class="col button" @click="idAlert">확인</a>
+                  </p>
+                </div>
+            </div>
+          </div>
+
+          <!--탭2-->
+          <div class="tab" id="tab2">
+            <div class="block">
+                <br><br>
+                <!--아비 찾기 텍스트는 탭 안으로 넣기-->
+                <div class="login-screen-title">비밀번호 찾기</div>
+        
+                <!--정보 입력-->
+                <div class="list no-hairlines-md">
+                  <ul>
+                    <li>
+                      <div class="item-content item-input">
+                        <div class="item-inner">
+                          <div class="item-title item-label">이름</div>
+                          <div class="item-input-wrap">
+                            <input type="text" placeholder=""/>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                        <div class="item-content item-input">
+                          <div class="item-inner">
+                            <div class="item-title item-label">아이디</div>
+                            <div class="item-input-wrap">
+                              <input type="text" placeholder=""/>
+                            </div>
+                          </div>
+                        </div>
+                    </li>
+                  </ul>
+                </div>
+                <!--버튼-->
+                <div class="block">
+                  <p class="row">
+                    <a href="#" class="col button" @click="pwAlert">확인</a>
+                  </p>
+                </div>
+            </div>
+          </div>
+        </div>
+  </div>
+</div>
+
+
   </div>
   <% if (process.env.TARGET === 'cordova') { %>
   <script src="cordova.js"></script>
