@@ -77,11 +77,16 @@
 </template>
 <script>
   export default {
+    
     methods: {
+      
       join: function () {
+        // firebase.initializeApp(firebaseConfig);
+        // var db = firebase.firestore()
         var self = this;
         var app = self.$app;
         var joinData = app.form.convertToData('#joinForm');
+        var uid;
 
         if (!joinData.email) {
           app.dialog.alert('이메일을 입력하세요.');
@@ -95,8 +100,8 @@
 
             // 사용자 등록(uid, 이름)
             firebase.firestore().collection("users").add({
-              uid: user.uid,
-              name: joinData.name,
+              //uid: user.uid,
+              name: joinData.name
             })
             .then(function(docRef) {
               console.log("Document written with ID: ", docRef.id);
