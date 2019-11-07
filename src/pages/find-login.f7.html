@@ -39,7 +39,7 @@
                       <div class="item-inner">
                         <div class="item-title item-label">이름</div>
                         <div class="item-input-wrap">
-                          <input type="text" placeholder="" />
+                          <input type="text" name="name" placeholder="" />
                         </div>
                       </div>
                     </div>
@@ -49,7 +49,7 @@
                       <div class="item-inner">
                         <div class="item-title item-label">휴대전화</div>
                         <div class="item-input-wrap">
-                          <input type="email" placeholder="'-'를 제외하고 입력하세요'" />
+                          <input type="number" name="hp" placeholder="'-'를 제외하고 입력하세요'" />
                         </div>
                       </div>
                     </div>
@@ -125,19 +125,26 @@
         var usersDB = firebase.firestore().collection("users");
         var dbEmail, dbName, dbHp;
 
-        // usersDB.get({
-        //       //uid: user.uid,
-        //       email: joinData.email,
-        //       name: joinData.name,
-        //       hp: joinData.hp
 
-        //     })
+        //DB에서 휴대번호로 검색해 데이터를 찾아냄
+        usersDB.where("hp", "==",tapData_id.hp)
+          .get()
+          .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+              // doc.data() is never undefined for query doc snapshots
+              //console.log(doc.id, " => ", doc.data());
+              dbEmail = doc.data().email,
+              dbName = doc.data().name,
+              dbHp = doc.data().hp;
+              app.dialog.alert("회원님의 이메일은 " + dbEmail + "입니다.");
+            });
+          })
+          .catch(function (error) {
+            console.log("Error getting documents: ", error);
+          });
 
-        usersDB.get()
-        .then
 
-
-        app.dialog.alert('ㅇㅇㅇ님의 아이디는 ***입니다.');
+        
       },
 
       // 등록되지
