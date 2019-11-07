@@ -14,7 +14,7 @@
         <div class="subnavbar">
           <div class="subnavbar-inner">
             <div class="segmented segmented-raised">
-              <a class="button tab-link tab-link-active" href="#tab1">아이디</a>
+              <a class="button tab-link tab-link-active" href="#tab1">이메일</a>
               <a class="button tab-link" href="#tab2">비밀번호</a>
             </div>
           </div>
@@ -28,8 +28,7 @@
           <div class="block">
             <br><br>
             <!--아비 찾기 텍스트는 탭 안으로 넣기-->
-            <div class="login-screen-title">아이디 찾기</div>
-
+            <div class="login-screen-title">이메일 찾기</div>
             <!--정보 입력-->
             <form id="tap1">
               <div class="list no-hairlines-md">
@@ -49,7 +48,7 @@
                       <div class="item-inner">
                         <div class="item-title item-label">휴대전화</div>
                         <div class="item-input-wrap">
-                          <input type="number" name="hp" placeholder="'-'를 제외하고 입력하세요'" />
+                          <input type="number" name="hp" placeholder="'-'를 제외하고 입력하세요" />
                         </div>
                       </div>
                     </div>
@@ -80,9 +79,9 @@
                   <li>
                     <div class="item-content item-input">
                       <div class="item-inner">
-                        <div class="item-title item-label">이름</div>
+                        <div class="item-title item-label">이메일</div>
                         <div class="item-input-wrap">
-                          <input type="text" placeholder="" />
+                          <input type="email" name = "email" placeholder="" />
                         </div>
                       </div>
                     </div>
@@ -90,9 +89,9 @@
                   <li>
                     <div class="item-content item-input">
                       <div class="item-inner">
-                        <div class="item-title item-label">아이디</div>
+                        <div class="item-title item-label">휴대전화</div>
                         <div class="item-input-wrap">
-                          <input type="text" placeholder="" />
+                          <input type="number" name="hp" placeholder="'-'를 제외하고 입력하세요" />
                         </div>
                       </div>
                     </div>
@@ -116,7 +115,7 @@
   export default {
     methods: {
 
-      // 아이디 찾기 alert 함수
+      // 이메일 찾기 alert 함수
       idAlert: function () {
         var self = this;
         var app = self.$app
@@ -136,7 +135,15 @@
               dbEmail = doc.data().email,
               dbName = doc.data().name,
               dbHp = doc.data().hp;
-              app.dialog.alert("회원님의 이메일은 " + dbEmail + "입니다.");
+
+              if(tapData_id.hp == dbHp && tapData_id.name == dbName){
+                app.dialog.alert("회원님의 이메일은 " + dbEmail + "입니다.");
+              }
+              //휴대번호가 같은 상태에서만 밑의 alert가 뜨는 버그가 있음 (논리 오류)
+              else{
+                app.dialog.alert("등록되지 않은 정보입니다.");
+              }
+              
             });
           })
           .catch(function (error) {
