@@ -108,15 +108,14 @@
             console.log(user);
 
             // 사용자 등록(uid, 이름)
-            usersDB.add({
+            usersDB.doc(joinData.email).set({
               //uid: user.uid,
               email: joinData.email,
               name: joinData.name,
               hp: joinData.hp
 
             })
-            .then(function(docRef) {
-              console.log("Document written with ID: ", docRef.id);
+            .then(function() {
               app.dialog.alert('회원가입이 완료되었습니다.');
               app.views.main.router.navigate('/', {
                   reloadCurrent: true
