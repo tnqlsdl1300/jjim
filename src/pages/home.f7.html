@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="panel panel-left panel-cover theme-dark panel-init" data-visible-breakpoint="960">
+    <div class="panel panel-left panel-cover theme-dark" data-visible-breakpoint="960">
         <div class="view view-init" data-view="left">
           <div class="page">
             <div class="navbar">
@@ -18,7 +18,7 @@
                     <div class="title user-info"></div>
                   </div>
                   <div class="col-50">
-                    <a href="/join/" data-view=".view-main" class="button button-raised button-fill panel-close">회원가입</a>
+                    <a href="/join/" data-view=".view-main" class="button button-raised button-fill panel-close join-btn">회원가입</a>
                   </div>
                 </div>
               </div>
@@ -110,7 +110,8 @@
             console.log(user.email)
             this.$el.find('.login-btn').hide(); // .떙떙 클래스의 상태 변경(hide, show)
             this.$el.find('.user-info').show();
-            this.$el.find('.user-info').text(user.email);  //user-info의 텍스트를 변경
+            this.$el.find('.join-btn').hide();
+            this.$el.find('.user-info').text(user.email + "님 환영합니다.");  //user-info의 텍스트를 변경
             
           } else {
             // No user is signed in.
