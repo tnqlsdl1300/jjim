@@ -70,6 +70,7 @@ var app = new Framework7({
       if (f7.device.cordova) {
         // Init cordova APIs (see cordova-app.js)
         cordovaApp.init(f7);
+       
       }
     },
   },

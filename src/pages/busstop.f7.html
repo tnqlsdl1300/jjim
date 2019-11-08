@@ -17,7 +17,7 @@
                 <p>
                     <!-- 즐겨찾기 -->
                     <a href="#" class="button open-toast-icon" @click="showToastIcon">
-                        <i class="f7-icons">star</i>
+                        <i class="icons">star</i>
                         <span class="if-not-md">Star</span>
                     </a>
                 </p>
@@ -111,18 +111,18 @@
 </div>
 </template>
 <script>
-    import { f7Button } from 'framework7';
+    import { Button } from 'framework7';
     export default {
         components: {
-        f7Button
+        Button
     },
     methods: {
         showToastIcon() {
         const self = this;
         // Create toast
         if (!self.toastIcon) {
-          self.toastIcon = self.$f7.toast.create({
-            icon: self.$theme.ios ? '<i class="f7-icons">start</i>' : '<i class="material-icons">start</i>',
+          self.toastIcon = self.toast.create({
+            icon: self.$theme.ios ? '<i class="icons">start</i>' : '<i class="material-icons">start</i>',
             text: 'I\'m on center',
             position: 'center',
             closeTimeout: 2000,

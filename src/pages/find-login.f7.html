@@ -81,7 +81,7 @@
                       <div class="item-inner">
                         <div class="item-title item-label">이메일</div>
                         <div class="item-input-wrap">
-                          <input type="email" name = "email" placeholder="" />
+                          <input type="email" name="email" placeholder="" />
                         </div>
                       </div>
                     </div>
@@ -115,50 +115,65 @@
   export default {
     methods: {
 
-      // 이메일 찾기 alert 함수
+      // 이메일 찾기 함수
       idAlert: function () {
         var self = this;
         var app = self.$app
         var tapData_id = app.form.convertToData('#tap1');
-        var tapData_pw = app.form.convertToData('#tap2');
         var usersDB = firebase.firestore().collection("users");
         var dbEmail, dbName, dbHp;
 
-
         //DB에서 휴대번호로 검색해 데이터를 찾아냄
-        usersDB.where("hp", "==",tapData_id.hp)
+        usersDB.where("hp", "==", tapData_id.hp)
+              .where("name", "==", tapData_id.name) // where 2개의 절을 연속으로 쓰면 and연산임
           .get()
           .then(function (querySnapshot) {
+            console.log(querySnapshot.size)
+            if(querySnapshot.size==0){
+              app.dialog.alert("등록되지 않은 정보입니다.");
+            }
             querySnapshot.forEach(function (doc) {
               // doc.data() is never undefined for query doc snapshots
-              //console.log(doc.id, " => ", doc.data());
+              // console.log(doc.id, " => ", doc.data());
               dbEmail = doc.data().email,
               dbName = doc.data().name,
               dbHp = doc.data().hp;
+              // app.dialog.alert(dbEmail + " " + dbName + " " + dbHp);
+              app.dialog.alert("회원님의 이메일은 " + dbEmail + "입니다.");
 
-              if(tapData_id.hp == dbHp && tapData_id.name == dbName){
-                app.dialog.alert("회원님의 이메일은 " + dbEmail + "입니다.");
-              }
-              //휴대번호가 같은 상태에서만 밑의 alert가 뜨는 버그가 있음 (논리 오류)
-              else{
-                app.dialog.alert("등록되지 않은 정보입니다.");
-              }
-              
+              // if (tapData_id.name == dbName && tapData_id.hp == dbHp) {
+              //                 }  
+              // else {
+              //   app.dialog.alert("등록되지 않은 정보입니다."); //휴대번호가 같은 상태에서만 밑의 alert가 뜨는 버그가 있음 (논리 오류?)
+              // }
+
             });
           })
           .catch(function (error) {
             console.log("Error getting documents: ", error);
           });
-
-
-        
       },
+      // end 이메일 찾기 함수
 
-      // 등록되지
+
+      // 비밀번호 찾기 함수
       pwAlert: function () {
         var self = this;
-        self.$app.dialog.alert('등록되지 않은 정보입니다.');
+        var app = self.$app
+        var tapData_id = app.form.convertToData('#tap2');
+        var usersDB = firebase.firestore().collection("users");
+        var dbEmail, dbName, dbHp;
+
+
+
+
+
+
+
+
       }
+      // end 비밀번호 찾기 함수
+
     }
   };
 </script>
