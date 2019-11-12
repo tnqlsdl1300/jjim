@@ -92,6 +92,10 @@ var searchbar = app.searchbar.create({
     }
   }
 });
+// $$('#logout-id .logout-btn').on('click', function() {
+//   firebase.auth().signOut();
+// });
+
 
 $$('#my-login-screen .login-button').on('click', function () {
   var username = $$('#my-login-screen [name="username"]').val();
@@ -136,22 +140,22 @@ $$('#my-find-screen .find-button').on('click', function () {
   app.dialog.alert('회원가입이 완료되었습니다.');
 });
 
-// Create toast with icon
-var toastIcon = app.toast.create({
-  icon: app.theme === 'ios' ? '<i class="f7-icons">star</i>' : '<i class="material-icons">star</i>',
-  text: 'I\'m with icon',
-  position: 'center',
-  closeTimeout: 2000,
-});
-
-// Open toast
-$$('.open-toast-icon').on('click', function () {
-  toastIcon.open();
-});
-
 // reservation check
 $$(' .rescheck-button').on('click', function () {
 
   // Alert username and password
   app.dialog.alert('예약이 완료되었습니다.');
 });
+
+/*
+$$('.link-back').on('click', function() {
+  console.log('test')
+  var container = $$('.page[data-name="home"] #map');
+  var options = {
+    center: new kakao.maps.LatLng(33.450701, 126.570667),
+    level: 3
+  };
+
+  var map = new kakao.maps.Map(container, options);
+})
+*/

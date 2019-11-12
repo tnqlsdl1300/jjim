@@ -4,7 +4,7 @@
             <div class="navbar-bg"></div>
             <div class="navbar-inner sliding"></div>
             <div class="left">
-                <a href="#" class="link back">
+                <a href="/" class="link" @click="refresh">
                     <i class="icon icon-back"></i>
                     <span class="if-not-md">Back</span>
                 </a>
@@ -61,17 +61,14 @@
                     app.dialog.alert('비밀번호를 입력하세요.');
                 } else {
                     firebase.auth().signInWithEmailAndPassword(loginData.email, loginData.password)
-                        // db.collection('users').add({
-                        //     userid: loginData.email,
-                        //     password: loginData.password
-                        // })
                         .then(function (docRef) {
-                            console.log("Document written with ID: ", docRef.id);
 
-                            app.dialog.alert('로그인이 완료되었습니다.');
+                            setTimeout("location.reload(true);");
                             app.views.main.router.navigate('/', {
                                 reloadCurrent: true
+                                
                             });
+                            
                         })
                         .catch(function (error) {
                             if (error.code == 'auth/user-not-found') {
@@ -79,18 +76,10 @@
                             }
                             console.error("Error adding document: ", error);
                         });
-
-                    /*
-                    db.collection("users").add({
-                        userid: userid,
-                        password: password
-                    })
-                    app.dialog.alert('로그인이 완료되었습니다.');
-                    app.views.main.router.navigate('/', {
-                        reloadCurrent: true
-                    });
-                    */
                 }
+            },
+            refresh: function () {
+                setTimeout("location.reload(true);");
             }
         }
     };

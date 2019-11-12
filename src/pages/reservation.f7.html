@@ -4,7 +4,7 @@
         <div class="navbar-bg"></div>
         <div class="navbar-inner sliding">
             <div class="left">
-                <a href="#" class="link back">
+                <a href="/busstop/" class="link">
                 <i class="icon icon-back"></i>
                 <span class="if-not-md">Back</span>
                 </a>
@@ -17,8 +17,8 @@
             <div class="right">
                 <p>
                     <!-- 홈버튼 -->
-                    <a href="/" class="link home">
-                        <i class="icon icon-exit"></i>
+                    <a href="/" class="link home" @click="refresh">
+                        <i class="material-icons">home</i>
                         <span class="if-not-md">Home</span>
                     </a>
                 </p>
@@ -47,6 +47,9 @@
             openAlert: function () {
                 var self = this;
                 self.$app.dialog.alert('예약이 완료되었습니다.');
+            },
+            refresh: function () {
+                setTimeout("location.reload(true);");
             }
         }
     };

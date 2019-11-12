@@ -5,7 +5,7 @@
       <div class="navbar-bg"></div>
       <div class="navbar-inner">
         <div class="left">
-          <a href="#" class="link back">
+          <a href="/login/" class="link">
             <i class="icon icon-back"></i>
             <span class="if-not-md">Back</span>
           </a>
@@ -125,28 +125,24 @@
 
         //DB에서 휴대번호로 검색해 데이터를 찾아냄
         usersDB.where("hp", "==", tapData_id.hp)
-              .where("name", "==", tapData_id.name) // where 2개의 절을 연속으로 쓰면 and연산임
+          .where("name", "==", tapData_id.name) // where 2개의 절을 연속으로 쓰면 and연산임
           .get()
           .then(function (querySnapshot) {
             console.log(querySnapshot.size)
-            if(querySnapshot.size==0){
+            if (querySnapshot.size == 0) {
               app.dialog.alert("등록되지 않은 정보입니다.");
             }
             querySnapshot.forEach(function (doc) {
               // doc.data() is never undefined for query doc snapshots
               // console.log(doc.id, " => ", doc.data());
               dbEmail = doc.data().email,
-              dbName = doc.data().name,
-              dbHp = doc.data().hp;
+                dbName = doc.data().name,
+                dbHp = doc.data().hp;
               // app.dialog.alert(dbEmail + " " + dbName + " " + dbHp);
               app.dialog.alert("회원님의 이메일은 " + dbEmail + "입니다.");
-
-              // if (tapData_id.name == dbName && tapData_id.hp == dbHp) {
-              //                 }  
-              // else {
-              //   app.dialog.alert("등록되지 않은 정보입니다."); //휴대번호가 같은 상태에서만 밑의 alert가 뜨는 버그가 있음 (논리 오류?)
-              // }
-
+              app.views.main.router.navigate('/login/', {
+                reloadCurrent: true
+              });
             });
           })
           .catch(function (error) {
@@ -159,16 +155,41 @@
       // 비밀번호 찾기 함수
       pwAlert: function () {
         var self = this;
-        var app = self.$app
-        var tapData_id = app.form.convertToData('#tap2');
+        var app = self.$app;
         var usersDB = firebase.firestore().collection("users");
-        var dbEmail, dbName, dbHp;
 
+        var user = firebase.auth().currentUser;
+        var auth = firebase.auth();
+        var email, emailAddress;
+        var tapData_pw = app.form.convertToData('#tap2');
 
+        usersDB.where("hp", "==", tapData_pw.hp)
+          .where("email", "==", tapData_pw.email) // where 2개의 절을 연속으로 쓰면 and연산임
+          .get()
+          .then(function (querySnapshot) {
+            console.log(querySnapshot.size)
+            if (querySnapshot.size == 0) {
+              app.dialog.alert("등록되지 않은 정보입니다.");
+            }
+            querySnapshot.forEach(function (doc) {
+              email = doc.data().email;
+              console.log(email);
+              emailAddress = email;
 
+              auth.sendPasswordResetEmail(emailAddress).then(function () {
+                // Email sent.
+                console.log('Email Sent');
+                app.dialog.alert("이메일이 발송되었습니다.");
 
-
-
+                app.views.main.router.navigate('/login/', {
+                  reloadCurrent: true
+                });
+              })
+            });
+          })
+          .catch(function (error) {
+            console.log("Error getting documents: ", error);
+          });
 
 
       }

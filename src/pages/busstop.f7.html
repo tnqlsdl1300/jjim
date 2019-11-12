@@ -4,7 +4,7 @@
         <div class="navbar-bg"></div>
         <div class="navbar-inner sliding">
             <div class="left">
-                <a href="#" class="link back">
+                <a href="/" class="link" @click="refresh">
                 <i class="icon icon-back"></i>
                 <span class="if-not-md">Back</span>
                 </a>
@@ -24,7 +24,7 @@
 
                 <p>
                     <!-- 홈버튼 -->
-                    <a href="/" data-view=".view-main" class="link home">
+                    <a href="/" data-view=".view-main" class="link home" @click="refresh">
                         <i class="material-icons">home</i>
                         <span class="if-not-md">Home</span>
                     </a>
@@ -119,28 +119,38 @@
     methods: {
         showToastIcon() {
         const self = this;
+        var app = self.$app;
+
+        
         // Create toast
-        if (!self.toastIcon) {
-          self.toastIcon = self.toast.create({
-            icon: self.$theme.ios ? '<i class="icons">start</i>' : '<i class="material-icons">start</i>',
+        if (!app.toastIcon) {
+          app.toastIcon = app.toast.create({
+            icon: app.$theme ? '<i class="icons">start</i>' : '<i class="material-icons">start</i>',
             text: 'I\'m on center',
             position: 'center',
-            closeTimeout: 2000,
+            closeTimeout: 1000,
           });
         }
         // Open it
-        self.toastIcon.open();
+        app.toastIcon.open();
       },
+      refresh: function () {
+                setTimeout("location.reload(true);");
+            }
     },
     on: {
-      pageBeforeOut() {
+      pageAfterOut() {
         const self = this;
-        self.toast.close();
+        var app = self.$app;
+
+
+        app.toast.close();
       },
       pageBeforeRemove() {
         const self = this;
+        var app = self.$app;
         // Destroy toasts when page removed
-        if (self.toastIcon) self.toastIcon.destroy();
+        if (app.toastIcon) app.toastIcon.destroy();
       },
     },
     };

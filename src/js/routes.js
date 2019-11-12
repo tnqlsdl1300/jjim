@@ -1,31 +1,18 @@
-
 import HomePage from '../pages/home.f7.html';
-import AboutPage from '../pages/about.f7.html';
 
 import LoginPage from '../pages/login.f7.html';
 import JoinPage from '../pages/join.f7.html'; // 회원가입
 import FindLoginPage from '../pages/find-login.f7.html';
-import NewPw from '../pages/new-pw.f7.html';
 
 import BusStopPage from '../pages/busstop.f7.html';
 import ReservationPage from '../pages/reservation.f7.html';
 import CancelPage from '../pages/cancel.f7.html';
 
 
-import LeftPage1 from '../pages/left-page-1.f7.html';
-import LeftPage2 from '../pages/left-page-2.f7.html';
-import DynamicRoutePage from '../pages/dynamic-route.f7.html';
-import RequestAndLoad from '../pages/request-and-load.f7.html';
-import NotFoundPage from '../pages/404.f7.html';
-
 var routes = [
   {
     path: '/',
     component: HomePage,
-  },
-  {
-    path: '/about/',
-    component: AboutPage,
   },
   {
     path: '/busstop/',
@@ -44,28 +31,12 @@ var routes = [
     component: FindLoginPage,
   },
   {
-    path: '/new-pw/',
-    component: NewPw,
-  },
-  {
-    path: '/left-page-1/',
-    component: LeftPage1,
-  },
-  {
     path: '/cancel/',
     component: CancelPage,
   },
   {
     path: '/join/',
     component: JoinPage,
-  },
-  {
-    path: '/left-page-2/',
-    component: LeftPage2,
-  },
-  {
-    path: '/dynamic-route/blog/:blogId/post/:postId/',
-    component: DynamicRoutePage,
   },
   {
     path: '/request-and-load/user/:userId/',
@@ -117,10 +88,7 @@ var routes = [
       }, 1000);
     },
   },
-  {
-    path: '(.*)',
-    component: NotFoundPage,
-  },
+
 ];
 
 export default routes;

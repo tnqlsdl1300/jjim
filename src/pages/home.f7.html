@@ -1,78 +1,126 @@
 <template>
-<div>
+  <div>
     <div class="panel panel-left panel-cover theme-dark" data-visible-breakpoint="960">
-        <div class="view view-init" data-view="left">
-          <div class="page">
-            <div class="navbar">
-              <div class="navbar-bg"></div>
-              <div class="navbar-inner sliding">
-                <div class="title">정보</div>
+      <div class="view view-init" data-view="left">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+              <div class="title user-info"></div>
+            </div>
+          </div>
+          <div class="page-content">
+            <!--블록 테두리-->
+            <div class="block block-strong">
+              <div class="row">
+                <div class="col-50">
+                  <!-- <a href="#" class="button button-raised button-fill panel-close login-screen-open" data-login-screen=".login-screen">로그인</a> -->
+                  <a href="/login/" data-view=".view-main"
+                    class="button button-raised button-fill panel-close login-btn">로그인</a>
+                  <a href="#" data-view=".view-main" class="button button-raised button-fill panel-close logout-btn"
+                    @click="LogoutBtn">로그아웃</a>
+                </div>
+                <div class="col-50">
+                  <a href="/join/" data-view=".view-main"
+                    class="button button-raised button-fill panel-close join-btn">회원가입</a>
+                </div>
+
               </div>
             </div>
-            <div class="page-content">
-              <div class="block block-strong">
-                <div class="row">
-                  <div class="col-50">
-                    <!-- <a href="#" class="button button-raised button-fill panel-close login-screen-open" data-login-screen=".login-screen">로그인</a> -->
-                    <a href="/login/" data-view=".view-main" class="button button-raised button-fill panel-close login-btn">로그인</a>
-                    <div class="title user-info"></div>
+            <!--end 블록 테두리-->
+
+            <!--블록 테두리2-->
+            <div class="block block-strong bookmark">
+              <div class="treeview">
+                <div class="treeview-item">
+                  <div class="treeview-item-root treeview-item-toggle">
+                    <div class="treeview-toggle"></div>
+                    <div class="treeview-item-content">
+                      <i class="icon f7-icons">star_fill</i>
+                      <div class="treeview-item-label">즐겨찾기</div>
+                    </div>
                   </div>
-                  <div class="col-50">
-                    <a href="/join/" data-view=".view-main" class="button button-raised button-fill panel-close join-btn">회원가입</a>
+                  <div class="treeview-item-children">
+                    <div class="treeview-item">
+                      <a href="/busstop/" class="treeview-item-root panel-close">
+                        <div class="treeview-item-content">
+                          <div class="treeview-item-label">7021번</div>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="treeview-item">
+                      <a href="/busstop/" class="treeview-item-root panel-close">
+                        <div class="treeview-item-content">
+                          <div class="treeview-item-label">7022번</div>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="treeview-item">
+                      <a href="/busstop/" class="treeview-item-root panel-close">
+                        <div class="treeview-item-content">
+                          <div class="treeview-item-label">7023번</div>
+                        </div>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            <!--end 블록 테두리2-->
           </div>
         </div>
-      </div>
-  <div class="page" data-name="home">
-    <!-- Top Navbar -->
-    <div class="navbar navbar">
-      <div class="navbar-bg"></div>
-      <div class="navbar-inner">
-        <div class="left">
-          <a href="#" class="link icon-only panel-open" data-panel="left">
-            <i class="icon f7-icons if-not-md">menu</i>
-            <i class="icon material-icons if-md">menu</i>
-          </a>
-        </div>
-        <!-- Searchbar with auto init -->
-        <form class="searchbar">
-          <div class="searchbar-inner">
-            <div class="searchbar-input-wrap">
-              <input type="search" placeholder="Search">
-              
-              <i class="searchbar-icon"></i>
-              <span class="input-clear-button"></span>
-            </div>
-            <span class="searchbar-disable-button if-not-aurora">Cancel</span>
-            
-          </div>
-          <!--서치바가 버튼으로 클릭되는 코드 부분-->
-          <!-- <a class="link popover-open" href="#" data-popover=".popover-search"></a> -->
-        </form>
       </div>
     </div>
-    <div class="page-content">
-      <div class="searchbar-backdrop"></div>
-      <a href="/busstop/" data-view=".view-main" class="button button-raised button-fill">버스정류장</a>
+    <div class="page" data-name="home">
+      <!-- Top Navbar -->
+      <div class="navbar navbar">
+        <div class="navbar-bg"></div>
+        <div class="navbar-inner">
+          <div class="left">
+            <a href="#" class="link icon-only panel-open" data-panel="left">
+              <i class="icon f7-icons if-not-md">menu</i>
+              <i class="icon material-icons if-md">menu</i>
+            </a>
+          </div>
+          <!-- Searchbar with auto init -->
+          <form class="searchbar">
+            <div class="searchbar-inner">
+              <div class="searchbar-input-wrap">
+                <input type="search" placeholder="Search">
 
-      <div id="map" style="width:100%;height:100%;"></div>
-	
-      <script>
-        var container = document.getElementById('map');
-        var options = {
-          center: new kakao.maps.LatLng(33.450701, 126.570667),
-          level: 3
-        };
+                <i class="searchbar-icon"></i>
+                <span class="input-clear-button"></span>
+              </div>
+              <span class="searchbar-disable-button if-not-aurora">Cancel</span>
 
-        var map = new kakao.maps.Map(container, options);
-      </script>
+            </div>
+            <!--서치바가 버튼으로 클릭되는 코드 부분-->
+            <!-- <a class="link popover-open" href="#" data-popover=".popover-search"></a> -->
+          </form>
+        </div>
+      </div>
+      <div class="page-content">
+        <div class="searchbar-backdrop"></div>
+        <a href="/busstop/" data-view=".view-main" class="button button-raised button-fill">버스정류장</a>
 
-      
-      <!--교수님 부분 ?-->
-      <!-- <div class="list">
+        <div id="map" style="width:100%;height:100%;"></div>
+
+        <script>
+          var self = this;
+          var app = self.$app;
+
+          var container = document.getElementById('map');
+          var options = {
+            center: new kakao.maps.LatLng(33.450701, 126.570667),
+            level: 3
+          };
+
+          var map = new kakao.maps.Map(container, options);
+        </script>
+
+
+        <!--교수님 부분 ?-->
+        <!-- <div class="list">
           <ul>
             
             <li class="item-content item-input">
@@ -88,43 +136,68 @@
             
           </ul>
         </div> -->
-    
+
+      </div>
     </div>
   </div>
-</div>
-    
-  </template>
 
-  <script>
-    export default {
-      data(){
-        return {
-          name:"aaa"
-        }
-      },
-      mounted(){  // mounted는 화면이 이동했을때 가장 처음 실행됨 (스튜디오의 oncreate문과 비슷)
-        // firebase.auth().signOut() <회원가입>
-        firebase.auth().onAuthStateChanged((user)=> {
-          if (user) {
-            // User is signed in.
-            console.log(user.email)
-            this.$el.find('.login-btn').hide(); // .떙떙 클래스의 상태 변경(hide, show)
-            this.$el.find('.user-info').show();
-            this.$el.find('.join-btn').hide();
-            this.$el.find('.user-info').text(user.email + "님 환영합니다.");  //user-info의 텍스트를 변경
-            
-          } else {
-            // No user is signed in.
-            this.$el.find('.login-btn').show();
-            this.$el.find('.user-info').hide();
-          }
-        });
-      },
-      methods:{
-        search(){
-          console.log("test")
-        }
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        name: "aaa"
       }
-    };
-  </script>   
-  
+    },
+    methods: {
+      search: function () {
+        console.log("test");
+      },
+      LogoutBtn: function () {
+        var self = this;
+        var app = self.$app;
+        setTimeout("location.reload(true);");
+        firebase.auth().signOut();
+
+        console.log("먹힘");
+      }
+    },
+    mounted() { // mounted는 화면이 이동했을때 가장 처음 실행됨 (스튜디오의 oncreate문과 비슷)
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          // User is signed in.
+          console.log(user.email)
+          this.$el.find('.login-btn').hide(); // .떙떙 클래스의 상태 변경(hide, show)
+          this.$el.find('.join-btn').hide();
+
+          this.$el.find('.user-info').show();
+          this.$el.find('.user-info').text(user.email); //user-info의 텍스트를 변경
+          this.$el.find('.logout-btn').show();
+          this.$el.find('.bookmark').show();
+
+        } else {
+          // No user is signed in.
+          this.$el.find('.login-btn').show();
+          this.$el.find('.user-info').text("JJIM");
+          this.$el.find('.logout-btn').hide();
+          this.$el.find('.bookmark').hide();
+        }
+
+      });
+    }
+    //   on: {
+    //     pageInit: function (e, page) {
+    //       var self = this;
+    //       var app = self.$app;
+
+    //       var container = document.getElementById('map');
+    //       var options = {
+    //         center: new kakao.maps.LatLng(33.450701, 126.570667),
+    //         level: 3
+    //       };
+
+    //       var map = new kakao.maps.Map(container, options);
+    //     },
+    //   }
+  };
+</script>

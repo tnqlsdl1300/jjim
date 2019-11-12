@@ -1,60 +1,90 @@
 <template>
-        <div class="page" data-name="new-pw">
-          <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner sliding">
-              <div class="left">
-                <a href="#" class="link back">
-                  <i class="icon icon-back"></i>
-                  <span class="if-not-md">Back</span>
-                </a>
-              </div>
-              <div class="title">JJIM</div>
-            </div>
-          </div>
-          <div class="page-content">
-            <!--정보 입력-->
-            <div class="list no-hairlines-md">
-              <ul>
-                <li>
-                  <div class="item-content item-input">
-                    <div class="item-inner">
-                      <div class="item-title item-label">새 비밀번호</div>
-                      <div class="item-input-wrap">
-                        <input type="password" placeholder=""/>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="item-content item-input">
-                    <div class="item-inner">
-                      <div class="item-title item-label">새 비밀번호 확인</div>
-                      <div class="item-input-wrap">
-                        <input type="password" placeholder=""/>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-    
-            <!--버튼-->
-            <div class="block">
-              <p class="row">
-                <a href="/" class="col button" @click="openAlert">확인</a>
-              </p>
-            </div>
-          </div>
+  <div class="page" data-name="new-pw">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
         </div>
-        </template>
-        <script>
-        export default {
-          methods: {
-          openAlert: function () {
-            var self = this;
-            self.$app.dialog.alert('수정.');
+        <div class="title">JJIM</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <!--정보 입력-->
+      <form class="new-pw-data">
+        <div class="list no-hairlines-md">
+          <ul>
+            <li>
+              <div class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">새 비밀번호</div>
+                  <div class="item-input-wrap">
+                    <input type="password" name="pwData" placeholder="" />
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">새 비밀번호 확인</div>
+                  <div class="item-input-wrap">
+                    <input type="password" name="pwDataCheck" placeholder="" />
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </form>
+
+      <!--버튼-->
+      <div class="block">
+        <p class="row">
+          <a href="/" class="col button" @click="PwBtn">확인</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  export default {
+    methods: {
+
+
+      PwBtn: function () {
+        var self = this;
+        var app = self.$app;
+        var NewPwForm = app.form.convertToData('#new-pw-data');
+
+
+        var user = firebase.auth().currentUser;
+        var auth = firebase.auth();
+        var email;
+
+        var user = firebase.auth().currentUser;
+
+        if (user) {
+          // User is signed in.
+          if (user != null) {
+            email = user.email;
           }
+        } else {
+          // No user is signed in.
         }
-        };
-        </script>
+
+        var emailAddress = email;
+
+        auth.sendPasswordResetEmail(emailAddress).then(function () {
+          // Email sent.
+          console.log('Email Sent');
+        }).catch(function (error) {
+          // An error happened.
+        });
+      }
+    }
+  };
+</script>

@@ -4,7 +4,7 @@
       <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
         <div class="left">
-          <a href="#" class="link back">
+          <a href="/" class="link" @click="refresh">
             <i class="icon icon-back"></i>
             <span class="if-not-md">Back</span>
           </a>
@@ -74,66 +74,95 @@
         </label>
       </div>
 
-      <!-- 로그인 -->
+      <!-- 확인 버튼 -->
       <div class="block">
         <p class="row">
           <a @click="join" class="col button">확인</a>
         </p>
       </div>
-      <!--// 로그인 -->
+      <!--// 확인 버튼 -->
 
     </div>
   </div>
 </template>
 <script>
   export default {
-    
+
     methods: {
-      
+
       join: function () {
         var self = this;
         var app = self.$app;
         var joinData = app.form.convertToData('#joinForm');
         var usersDB = firebase.firestore().collection("users"); // 사용자 디비 명령어 줄임
-        var uid;
+        var user = firebase.auth().currentUser;
+        var auth = firebase.auth();
+        var dbHp;
+
+        // db에서 휴대전화 데이터를 받아옴(전화번호 중복 방지)
+        usersDB.where("hp", "==", joinData.hp)
+          .get()
+          .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+              dbHp = doc.data().hp;
+              console.log("db 데이터"+ dbHp);
+            });
+          })
+          .catch(function (error) {
+            console.log("Error getting documents: ", error);
+          });
+          // end db에서 휴대전화 데이터를 받아옴(전화번호 중복 방지)
+
 
         if (!joinData.email) {
           app.dialog.alert('이메일을 입력하세요.');
         } else if (!joinData.password) {
-           app.dialog.alert('비밀번호를 입력하세요.');
-        } else {
+          app.dialog.alert('비밀번호를 입력하세요.');
+        } 
+        else if(dbHp == joinData.hp){
+          app.dialog.alert('이미 가입한 유저입니다.');
+        }
+        else {
+
           // 사용자 등록(이메일, 비밀번호)
-          firebase.auth().createUserWithEmailAndPassword(joinData.email,  joinData.password)
-          .then(function(user) {
-            console.log(user);
+          firebase.auth().createUserWithEmailAndPassword(joinData.email, joinData.password)
+            .then(function (user) {
+              console.log(user);
 
-            // 사용자 등록(uid, 이름)
-            usersDB.doc(joinData.email).set({
-              //uid: user.uid,
-              email: joinData.email,
-              name: joinData.name,
-              hp: joinData.hp
+              // 사용자 등록(uid, 이름)
+              usersDB.doc(joinData.email).set({
+                  //uid: user.uid,
+                  email: joinData.email,
+                  name: joinData.name,
+                  hp: joinData.hp
 
-            })
-            .then(function() {
-              app.dialog.alert('회원가입이 완료되었습니다.');
-              app.views.main.router.navigate('/', {
-                  reloadCurrent: true
-              });
-            })
-            .catch(function(error) {
+                })
+                // 전화번호가 겹치면 에러떠야함
+                .then(function () {
+                  //setTimeout("location.reload(true);"); 다시 넣으셈
+
+                  // app.views.main.router.navigate('/', {
+                  //   reloadCurrent: true
+                  // });
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+            }).catch(function (error) {
+              if (error.code == 'auth/invalid-email') {
+                app.dialog.alert('올바른 이메일을 입력하세요.');
+              } else if (error.code == 'auth/weak-password') {
+                app.dialog.alert('비밀번호는 6자리 이상으로 입력해주세요.');
+              }
+              else if (error.code == 'auth/email-already-in-use') {
+                app.dialog.alert('이미 가입한 유저입니다.');
+              }
               console.log(error);
             });
-          }).catch(function(error) {
-            if (error.code == 'auth/invalid-email') {
-              app.dialog.alert('올바른 이메일을 입력하세요.');
-            } 
-            else if (error.code == 'auth/weak-password') {
-              app.dialog.alert('비밀번호는 6자리 이상으로 입력해주세요.');
-            }
-            console.log(error);
-          });
         }
+      },
+      refresh: function () {
+        setTimeout("location.reload(true);");
       }
     }
   };
