@@ -90,7 +90,7 @@
 
     methods: {
 
-      join: function () {
+      join(){ // DB와 데이터를 비교하여 중복 값을 방지하는 함수
         var self = this;
         var app = self.$app;
         var joinData = app.form.convertToData('#joinForm');
@@ -103,20 +103,14 @@
         // db에서 휴대전화 데이터를 받아옴(전화번호 중복 방지)
         usersDB.where("hp", "==", joinData.hp)
           .get()
-          .then((querySnapshot)=> {
-            console.log(querySnapshot.empty)  // querySnapshot.empty 겹치는 번호가 없을때
+          .then((querySnapshot)=> { // querySnapshot.empty 자주 쓰셈
+            console.log(querySnapshot.empty)  // querySnapshot.empty 겹치는 번호가 없을때(empty값은 0, 1로 나뉨)
             if(querySnapshot.empty){ // 번호가 없을때 가정, 회원가입 함수 실행
               this.insertUser()
             }
             else{
-              app.dialog.alert("이미 가입한 휴대전화번호입니다")
+              app.dialog.alert("이미 가입한 휴대전화번호입니다");
             }
-            // querySnapshot.forEach(function (doc) {
-            //   dbHp = doc.data().hp;
-            //   console.log("위쪽 db 데이터"+ dbHp);
-            //   console.log("1");
-              
-            // });
           })
           .catch(function (error) {
             console.log("Error getting documents: ", error);
@@ -126,7 +120,7 @@
 
        
       },
-      insertUser(){
+      insertUser(){ // 회원가입 끗
 
         var self = this;
         var app = self.$app;
@@ -141,32 +135,10 @@
         } else if (!joinData.password) {
           app.dialog.alert('비밀번호를 입력하세요.');
         }
-        // 밑의 경우 번호가 같지 않아도 해당 if문으로 들어감
-        // else if(usersDB.where("hp", "==", joinData.hp)){
-        //   console.log("아래 db 데이터"+ dbHp);
-        //   console.log("폼 데이터"+ joinData.hp);
-        //   console.log("2");
-        //   app.dialog.alert('이미 가입한 유저입니다.');
-        // }
+        else if (!joinData.name){
+          app.dialog.alert('이름을 입력하세요.');
+        }
         else {
-
-          // usersDB.where("hp", "==", joinData.hp)
-          //   .get()
-          //   .then(function (querySnapshot) {
-          //     querySnapshot.forEach(function (doc) {
-          //       dbHp = doc.data().hp;
-                
-          //       console.log("위쪽 db 데이터" + dbHp);
-          //       console.log("1");
-          //     });
-          //   })
-          //   .catch(function (error) {
-          //     console.log("비교 에러");
-          //     console.log("Error getting documents: ", error);
-          //   });
-
-          // 디비 비교 함수 밖으로 나오면 dbHp 정보가 사라짐(밑의 사용자 등록쪽에서는 제대로 출력됨)
-          // 우선순위가 어떻게 되는건지?? 현재: 213
           firebase.auth().createUserWithEmailAndPassword(joinData.email, joinData.password)
               .then(function (user) {
                 console.log("사용자 등록 dbHp: " + dbHp);
@@ -179,13 +151,12 @@
                     hp: joinData.hp
 
                   })
-                  // 전화번호가 겹치면 에러떠야함
                   .then(function () {
-                    // setTimeout("location.reload(true);");
+                    setTimeout("location.reload(true);");
 
-                    // app.views.main.router.navigate('/', {
-                    //   reloadCurrent: true
-                    // });
+                    app.views.main.router.navigate('/', {
+                      reloadCurrent: true
+                    });
                   })
                   .catch(function (error) {
                     console.log(error);
@@ -200,12 +171,6 @@
                 }
                 console.log(error);
               });
-   
-
-
-
-
-
         }
       },
       refresh: function () {
