@@ -97,35 +97,16 @@
         </div>
       </div>
       <div class="page-content">
-          <div class="list searchbar-found">
-              <ul>
-                <li class="item-content">
-                  <div class="item-inner">
-                    <a href="/busstop/" class="button item-title">Acura</a>
-                  </div>
-                </li>
-                <li class="item-content">
-                  <div class="item-inner">
-                    <a href="/busstop/" class="button item-title">Audi</a>
-                  </div>
-                </li>
-                <li class="item-content">
-                  <div class="item-inner">
-                    <div class="item-title">BMW</div>
-                  </div>
-                </li>
-                <li class="item-content">
-                  <div class="item-inner">
-                    <div class="item-title">Volvo</div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="block searchbar-not-found">
-                <div class="block-inner">검색결과가 없습니다.</div>
-              </div>
-        <div class="searchbar-backdrop"></div>
+        <div class="list searchbar-found">
+          <ul class="search-result">
 
+          </ul>
+        </div>
+        <div class="block searchbar-not-found">
+          <div class="block-inner">검색결과가 없습니다.</div>
+        </div>
+        <div class="searchbar-backdrop"></div>
+        <div class="button" @click="ex">버튼</div>
         <div id="map" style="width:100%;height:100%;"></div>
 
         <script>
@@ -141,25 +122,6 @@
           var map = new kakao.maps.Map(container, options);
         </script>
 
-
-        <!--교수님 부분 ?-->
-        <!-- <div class="list">
-          <ul>
-            
-            <li class="item-content item-input">
-              <div class="item-media">... icon/image here ...</div>
-              <div class="item-inner">
-                <div class="item-title item-label">Name</div>
-                <div class="item-input-wrap">
-                  <input type="text" name="name">
-                  <span class="input-clear-button"></span>
-                </div>
-              </div>
-            </li>
-            
-          </ul>
-        </div> -->
-
       </div>
     </div>
   </div>
@@ -174,13 +136,20 @@
     },
 
     methods: {
+      ex: function () {
+        console.log("버튼됨", );
+
+        // When loading done, we need to reset it
+
+
+      },
       search: function () {
         console.log("서치바됨");
         var self = this;
         var app = self.$app;
 
         // create searchbar
-         
+
       },
       LogoutBtn: function () {
         var self = this;
@@ -196,26 +165,91 @@
     mounted() { // mounted는 화면이 이동했을때 가장 처음 실행됨 (스튜디오의 oncreate문과 비슷)
 
       var self = this;
-        var app = self.$app;
+      var app = self.$app;
       app.searchbar.create({
-          el: '.searchbar',
-          searchContainer: '.list',
-          searchIn: '.item-title',
-          on: {
-            search(sb, query, previousQuery) {
-              console.log(query)
-              firebase.firestore().collection("bus-153").doc("busstop").get()
-              .then((result)=>{
-                var data=result.data();
-                console.log(data.busstops)
-                data.busstops.forEach((stop)=>{
-                  console.log(stop.name)
-                })
-              })
-              //console.log(query, previousQuery);
-            }
+        el: '.searchbar',
+        searchContainer: '.list',
+        searchIn: '.item-title',
+        on: {
+          // doc의 id를 서치바에 검색
+          search(sb, query, previousQuery) {
+            console.log("입력값: " + query);
+
+            //   firebase.firestore().collection("bus").where("query", "==", query).get()
+            //     .then(function (querySnapshot) {
+            //       querySnapshot.forEach(function (doc) {
+            //         console.log("내부");
+            //         // doc.data() is never undefined for query doc snapshots
+            //         console.log(doc.id, " => ", doc.data());
+            //       });
+            //     })
+            //     .catch(function (error) {
+            //       console.log("Error getting documents: ", error);
+            //     });
+            // },
+
+            // 11-15 수정필요 -> where문
+            firebase.firestore().collection("bus").doc(query).get().then((result) => {
+              var data = result.data()
+              if (data) {
+
+
+                var $searchResult = self.$el.find('.search-result')
+                $searchResult.empty()
+
+                var itemHTML =
+                  '<li class="item-content">' +
+                  '<div class="item-inner">' +
+                  '<a href="/busstop/" class="button item-title">' + data.bus_num + '</a>' +
+                  '</div>' +
+                  '</li>';
+
+                $searchResult.prepend(itemHTML);
+                // for(var key in data){
+                //   result++
+                //   console.log(data[key])
+
+                // }
+                self.$el.find(".searchbar-found").show()
+                self.$el.find(".searchbar-not-found").hide()
+
+
+                // data.forEach((value,key) => {
+                //   // console.log(s.bus_num);
+
+
+
+                // })
+              } else {
+                self.$el.find(".searchbar-found").hide()
+                self.$el.find(".searchbar-not-found").show()
+              }
+
+            })
+            // firebase.firestore().collection("bus").where("bus_num", "==", query).get()
+            //   .then((result) => {
+            //     var data = result.data();
+            //     console.log(data);
+            //     var $searchResult = self.$el.find('.search-result')
+            //     $searchResult.empty()
+            //     data.busstops.forEach((s) => {
+            //       console.log(s.bus_num);
+
+            //       var itemHTML =
+            //         '<li class="item-content">' +
+            //         '<div class="item-inner">' +
+            //         '<a href="/busstop/" class="button item-title">' + s.name + '</a>' +
+            //         '</div>' +
+            //         '</li>';
+
+            //       $searchResult.prepend(itemHTML);
+            //     })
+            //   })
+            // .catch문 넣어보기
+            console.log(query, previousQuery);
           }
-        });
+        }
+      });
       this.$el.find('.list').hide();
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
@@ -236,7 +270,6 @@
           this.$el.find('.logout-btn').hide();
           this.$el.find('.bookmark').hide();
         }
-
       });
     }
   };

@@ -134,10 +134,11 @@
             }
             querySnapshot.forEach(function (doc) {
               // doc.data() is never undefined for query doc snapshots
-              // console.log(doc.id, " => ", doc.data());
+              console.log(doc.id, " => ", doc.data());
               dbEmail = doc.data().email,
                 dbName = doc.data().name,
-                dbHp = doc.data().hp;
+                dbHp = doc.data().hp+1;
+                console.log(dbHp);
               // app.dialog.alert(dbEmail + " " + dbName + " " + dbHp);
               app.dialog.alert("회원님의 이메일은 " + dbEmail + "입니다.");
               app.views.main.router.navigate('/login/', {

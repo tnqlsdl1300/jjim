@@ -149,7 +149,6 @@
                     email: joinData.email,
                     name: joinData.name,
                     hp: joinData.hp
-
                   })
                   .then(function () {
                     setTimeout("location.reload(true);");
@@ -157,6 +156,16 @@
                     app.views.main.router.navigate('/', {
                       reloadCurrent: true
                     });
+                    // Create toast
+                  if (!app.toastIcon) {
+                    app.toastIcon = app.toast.create({
+                      text: '회원가입이 완료되었습니다.',
+                      position: 'center',
+                      closeTimeout: 1000,
+                    });
+                  }
+                  // Open it
+                  app.toastIcon.open();
                   })
                   .catch(function (error) {
                     console.log(error);

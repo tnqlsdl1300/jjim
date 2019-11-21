@@ -1,157 +1,215 @@
 <template>
-<div class="page" data-name="busstop">
-    <div class="navbar navbar-large">
-        <div class="navbar-bg"></div>
-        <div class="navbar-inner sliding">
-            <div class="left">
-                <a href="/" class="link" @click="refresh">
-                <i class="icon icon-back"></i>
-                <span class="if-not-md">Back</span>
-                </a>
-            </div>
-            <div class="title-large">
-                <!-- 버스번호 -->
-                <div class="title-large-text">7017<small>버스방향</small></div>
-            </div>
-            <div class="right">
-                <p>
-                    <!-- 즐겨찾기 -->
-                    <a href="#" class="button open-toast-icon" @click="showToastIcon">
-                        <i class="f7-icons">star</i>
-                        <span class="if-not-md">Star</span>
+    <div class="page" data-name="busstop">
+        <div class="navbar navbar-large">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="/" class="link" @click="refresh">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
                     </a>
-                </p>
+                </div>
+                <div class="title-large">
+                    <!-- 버스번호 -->
+                    <div class="title-large-text bus-title"></div>
+                </div>
+                <div class="right">
+                    <p>
+                        <!-- 즐겨찾기 -->
+                        <a href="#" class="button open-toast-icon" @click="showToastIcon">
+                            <i class="f7-icons">star</i>
+                            <span class="if-not-md">Star</span>
+                        </a>
+                    </p>
 
-                <p>
-                    <!-- 홈버튼 -->
-                    <a href="/" data-view=".view-main" class="link home" @click="refresh">
-                        <i class="material-icons">home</i>
-                        <span class="if-not-md">Home</span>
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="page-content">
-        <!-- Timeline -->
-        <div class="timeline">
-            <!-- Timeline item with Card -->
-            <div class="timeline-item">
-                <div class="timeline-item-date"><small></small></div>
-                <div class="timeline-item-divider"></div>
-                <div class="timeline-item-content card">
-                    <a href="/reservation/" data-view=".view-main">
-                        <div class="button card-header">버스정류장</div>
-                    </a>
-                    <div class="card-footer card-footer-padding">버스정보</div>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-item-date"><small></small></div>
-                <div class="timeline-item-divider"></div>
-                <div class="timeline-item-content card">
-                    <a href="/reservation/" data-view=".view-main">
-                        <div class="button card-header">버스정류장</div>
-                    </a>
-                    <div class="card-footer card-footer-padding">버스정보</div>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-item-date"><small></small></div>
-                <div class="timeline-item-divider"></div>
-                <div class="timeline-item-content card">
-                    <a href="/reservation/" data-view=".view-main">
-                        <div class="button card-header">버스정류장</div>
-                    </a>
-                    <div class="card-footer card-footer-padding">버스정보</div>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-item-date"><small></small></div>
-                <div class="timeline-item-divider"></div>
-                <div class="timeline-item-content card">
-                    <a href="/reservation/" data-view=".view-main">
-                        <div class="button card-header">버스정류장</div>
-                    </a>
-                    <div class="card-footer card-footer-padding">버스정보</div>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-item-date"><small></small></div>
-                <div class="timeline-item-divider"></div>
-                <div class="timeline-item-content card">
-                    <a href="/reservation/" data-view=".view-main">
-                        <div class="button card-header">버스정류장</div>
-                    </a>
-                    <div class="card-footer card-footer-padding">버스정보</div>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-item-date"><small></small></div>
-                <div class="timeline-item-divider"></div>
-                <div class="timeline-item-content card">
-                    <a href="/reservation/" data-view=".view-main">
-                        <div class="button card-header">버스정류장</div>
-                    </a>
-                    <div class="card-footer card-footer-padding">버스정보</div>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-item-date"><small></small></div>
-                <div class="timeline-item-divider"></div>
-                <div class="timeline-item-content card">
-                    <a href="/reservation/" data-view=".view-main">
-                        <div class="button card-header">버스정류장</div>
-                    </a>
-                    <div class="card-footer card-footer-padding">버스정보</div>
+                    <p>
+                        <!-- 홈버튼 -->
+                        <a href="/" data-view=".view-main" class="link home" @click="refresh">
+                            <i class="material-icons">home</i>
+                            <span class="if-not-md">Home</span>
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
+        <div class="page-content">
+            <!-- Timeline -->
+            <form class="busData">
+                <div class="timeline">
+                    <!-- Timeline item with Card -->
+                    <div class="timeline-item">
+                        <div class="timeline-item-date"><small></small></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content card">
+                            <a href="/reservation/" data-view=".view-main">
+                                <div class="button card-header b1"></div>
+                            </a>
+                            <div class="card-footer card-footer-padding i1">버스정보</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-item-date"><small></small></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content card">
+                            <a href="/reservation/" data-view=".view-main">
+                                <div class="button card-header b2"></div>
+                            </a>
+                            <div class="card-footer card-footer-padding i2">버스정보</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-item-date"><small></small></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content card">
+                            <a href="/reservation/" data-view=".view-main">
+                                <div class="button card-header b3"></div>
+                            </a>
+                            <div class="card-footer card-footer-padding i3">버스정보</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-item-date"><small></small></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content card">
+                            <a href="/reservation/" data-view=".view-main">
+                                <div class="button card-header b4"></div>
+                            </a>
+                            <div class="card-footer card-footer-padding i4">버스정보</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-item-date"><small></small></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content card">
+                            <a href="/reservation/" data-view=".view-main">
+                                <div class="button card-header b5"></div>
+                            </a>
+                            <div class="card-footer card-footer-padding i5">버스정보</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-item-date"><small></small></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content card">
+                            <a href="/reservation/" data-view=".view-main">
+                                <div class="button card-header b6"></div>
+                            </a>
+                            <div class="card-footer card-footer-padding i6">버스정보</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-item-date"><small></small></div>
+                        <div class="timeline-item-divider"></div>
+                        <div class="timeline-item-content card">
+                            <a href="/reservation/" data-view=".view-main">
+                                <div class="button card-header b7"></div>
+                            </a>
+                            <div class="card-footer card-footer-padding i7">버스정보</div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 </template>
 <script>
-    import { Button } from 'framework7';
-    export default {
-        components: {
+    import {
         Button
-    },
-    methods: {
-        showToastIcon() {
-        const self = this;
-        var app = self.$app;
+    } from 'framework7';
+    export default {
+        components: {
+            Button
+        },
+        methods: {
+            showToastIcon() {
+                const self = this;
+                var app = self.$app;
 
-        
-        // Create toast
-        if (!app.toastIcon) {
-          app.toastIcon = app.toast.create({
-            icon: app.$theme ? '<i class="icons">start</i>' : '<i class="material-icons">start</i>',
-            text: 'I\'m on center',
-            position: 'center',
-            closeTimeout: 1000,
-          });
-        }
-        // Open it
-        app.toastIcon.open();
-      },
-      refresh: function () {
+
+                // Create toast
+                if (!app.toastIcon) {
+                    app.toastIcon = app.toast.create({
+                        icon: app.$theme ? '<i class="icons">start</i>' : '<i class="material-icons">start</i>',
+                        text: 'I\'m on center',
+                        position: 'center',
+                        closeTimeout: 1000,
+                    });
+                }
+                // Open it
+                app.toastIcon.open();
+            },
+            refresh: function () {
                 setTimeout("location.reload(true);");
+            },
+            setBusStop(){
+                
+                var app = self.$app;
+                console.log("1");
+                var busDB = firebase.firestore().collection("bus");
+                var b1, b2, b3, b4, b5, b6, b7, busTitle;
+
+                busDB.doc("7018")
+                    .get()
+                    .then( (doc)=> {
+                        console.log("2",app);
+                        b1 = doc.data().b1;
+                        b2 = doc.data().b2;
+                        b3 = doc.data().b3;
+                        b4 = doc.data().b4;
+                        b5 = doc.data().b5;
+                        b6 = doc.data().b6;
+                        b7 = doc.data().b7;
+                        busTitle = doc.data().bus_num;
+                        this.$el.find('.bus-title').text(busTitle + "번");
+                        this.$el.find('.b1').text(b1);
+                        this.$el.find('.b2').text(b2);
+                        this.$el.find('.b3').text(b3);
+                        this.$el.find('.b4').text(b4);
+                        this.$el.find('.b5').text(b5);
+                        this.$el.find('.b6').text(b6);
+                        this.$el.find('.b7').text(b7);
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+                    console.log("3");
             }
-    },
-    on: {
-      pageAfterOut() {
-        const self = this;
-        var app = self.$app;
+        },
+        on: {
+            pageAfterOut() {
+                const self = this;
+                var app = self.$app;
 
 
-        app.toast.close();
-      },
-      pageBeforeRemove() {
-        const self = this;
-        var app = self.$app;
-        // Destroy toasts when page removed
-        if (app.toastIcon) app.toastIcon.destroy();
-      },
-    },
+                app.toast.close();
+
+                //setinterval
+                var i = 1;
+
+                for (j = 1; j < 8; j++) {
+                    $('.a' + j).text('');
+                }
+
+                $('.a' + i).text('1234호');
+
+
+                i = i + 3;
+            },
+            pageBeforeRemove() {
+                const self = this;
+                var app = self.$app;
+                // Destroy toasts when page removed
+                if (app.toastIcon) app.toastIcon.destroy();
+            },
+        },
+        mounted() {
+            
+            this.setBusStop()
+            setInterval(()=> {
+                this.setBusStop()
+               
+            }, 2000);
+        },
+        
     };
 </script>
