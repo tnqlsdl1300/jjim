@@ -141,17 +141,14 @@
             refresh: function () {
                 setTimeout("location.reload(true);");
             },
-            setBusStop(){
-                
+            // 처음 한번만 실행해도 ok
+            readDB() {
                 var app = self.$app;
-                console.log("1");
                 var busDB = firebase.firestore().collection("bus");
-                var b1, b2, b3, b4, b5, b6, b7, busTitle;
-
+                var b1, b2, b3, b4, b5, b6, b7, busTitle, i;
                 busDB.doc("7018")
                     .get()
-                    .then( (doc)=> {
-                        console.log("2",app);
+                    .then((doc) => {
                         b1 = doc.data().b1;
                         b2 = doc.data().b2;
                         b3 = doc.data().b3;
@@ -168,11 +165,77 @@
                         this.$el.find('.b5').text(b5);
                         this.$el.find('.b6').text(b6);
                         this.$el.find('.b7').text(b7);
+                        console.log("첫번째")
                     })
                     .catch(function (error) {
                         console.log("Error getting documents: ", error);
                     });
-                    console.log("3");
+            },
+            readI() {
+                var app = self.$app;
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var i;
+
+                // i 값을 db에서 읽음
+                RbusDB.doc("1111")
+                    .get()
+                    .then((doc) => {
+                        i = doc.data().empty;
+                        console.log("두번쨰");
+                        this.setBusStop(i); // 세번째
+                        this.plusI(i); // 네번째
+                        console.log("------------------로테이션 끝----------------------")
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+            },
+
+            setBusStop(i) {
+
+                var app = self.$app;
+                var RbusDB = firebase.firestore().collection("reservationBus");
+
+
+                // 계속해서 5초마다 새로고침하며 클래스에 적용
+                for (var j = 1; j < 8; j++) {
+                    this.$el.find('.i' + j).text("");
+                    console.log("세번쨰")
+                }
+                this.$el.find('.i' + i).text("1111번");
+                console.log("세번쨰 i = " + i)
+                console.log("세번쨰 반")
+
+            },
+            plusI(i) {
+
+                var app = self.$app;
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                if (i > 7) {
+                    // 값7 오버시 i를 1로 재설정
+                    RbusDB.doc("1111").set({
+                            empty: 1
+                        })
+                        .then(function () {
+                            console.log("네번째 첫")
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+
+                } else {
+                    // i 값을 +3씩 계속 업데이트 해줌
+                    RbusDB.doc("1111").set({
+                            empty: i + 3
+                        })
+                        .then(function () {
+                            console.log("네번째 둘")
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+
+                }
             }
         },
         on: {
@@ -183,17 +246,6 @@
 
                 app.toast.close();
 
-                //setinterval
-                var i = 1;
-
-                for (j = 1; j < 8; j++) {
-                    $('.a' + j).text('');
-                }
-
-                $('.a' + i).text('1234호');
-
-
-                i = i + 3;
             },
             pageBeforeRemove() {
                 const self = this;
@@ -203,13 +255,13 @@
             },
         },
         mounted() {
-            
-            this.setBusStop()
-            setInterval(()=> {
-                this.setBusStop()
-               
-            }, 2000);
+            this.readDB()
+            this.readI()
+            setInterval(() => {
+                this.readI()
+
+            }, 5000);
         },
-        
+
     };
 </script>
