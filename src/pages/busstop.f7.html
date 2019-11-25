@@ -141,6 +141,43 @@
             refresh: function () {
                 setTimeout("location.reload(true);");
             },
+            LoginCheck() {
+                const self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var userEmail;
+
+                // 유저 데이터를 받아서 현재 접속되어 있는 유저의 email 데이터를 받음
+                // 받은 email데이터로 userDB의 email에 예약 정보를 저장
+                // 버스 상태에 따라(이미 지난 정류장 클릭x) 예약이 가능하게 버튼 활성화
+
+                firebase.auth().onAuthStateChanged((user) => {
+                    if (user) {
+                        // User is signed in.
+                        console.log(user.email)
+                        userEmail = user.email
+                        this.reservation(userEmail)
+
+                    } else {
+                        app.dialog.alert("로그인을 해주세요.");
+                    }
+                });
+            },
+            reservation(userEmail) {
+                var usersDB = firebase.firestore().collection("users");
+
+                return usersDB.doc(userEmail).update({
+                    reservation : 1111
+                  })
+                  .then(function () {
+                      console.log("완료")
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+            },
             // 처음 한번만 실행해도 ok
             readDB() {
                 var app = self.$app;
@@ -211,7 +248,7 @@
 
                 var app = self.$app;
                 var RbusDB = firebase.firestore().collection("reservationBus");
-                if (i > 7) {
+                if (i > 4) {
                     // 값7 오버시 i를 1로 재설정
                     RbusDB.doc("1111").set({
                             empty: 1
@@ -257,6 +294,7 @@
         mounted() {
             this.readDB()
             this.readI()
+            this.LoginCheck()
             setInterval(() => {
                 this.readI()
 
