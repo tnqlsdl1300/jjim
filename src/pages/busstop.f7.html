@@ -199,7 +199,10 @@
             },
             setBusStop(i) {
                 var app = self.$app;
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
                 var RbusDB = firebase.firestore().collection("reservationBus");
+                var userEmail = user.email;
 
                 // 계속해서 5초마다 새로고침하며 클래스에 적용
                 for (var j = 1; j < 8; j++) {
@@ -207,6 +210,9 @@
                     console.log("세번쨰")
                 }
                 this.$el.find('.i' + i).text("1111번");
+
+                
+
                 console.log("세번쨰 i = " + i)
                 console.log("세번쨰 반")
 
