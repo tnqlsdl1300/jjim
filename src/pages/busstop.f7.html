@@ -220,9 +220,6 @@
             plusI(i) {
                 var app = self.$app;
                 var RbusDB = firebase.firestore().collection("reservationBus");
-                var RbusDB = firebase.firestore().collection("reservationBus");
-
-
                 if (i > 7) {
                     // 값7 오버시 i를 1로 재설정
                     RbusDB.doc("1111").set({
@@ -1116,7 +1113,7 @@
 
             // 버스 예약 정보 저장 -> reservationBus
             return RbusDB.doc("11").update({
-                    busstop2: "응암오거리"
+                    busstop2: ""
                 })
                 .then(function () {
                     console.log("Document successfully updated!");
@@ -1152,7 +1149,7 @@
 
             // 버스 예약 정보 저장 -> reservationBus
             return RbusDB.doc("11").update({
-                    busstop3: "은평문화예술정보학교"
+                    busstop3: ""
                 })
                 .then(function () {
                     console.log("Document successfully updated!");
@@ -1188,7 +1185,7 @@
 
             // 버스 예약 정보 저장 -> reservationBus
             return RbusDB.doc("11").update({
-                    busstop4: "응암초등학교"
+                    busstop4: ""
                 })
                 .then(function () {
                     console.log("Document successfully updated!");
@@ -1224,7 +1221,7 @@
 
             // 버스 예약 정보 저장 -> reservationBus
             return RbusDB.doc("11").update({
-                    busstop5: "명지전문대.충암중고등학교"
+                    busstop5: ""
                 })
                 .then(function () {
                     console.log("Document successfully updated!");
@@ -1260,7 +1257,7 @@
 
             // 버스 예약 정보 저장 -> reservationBus
             return RbusDB.doc("11").update({
-                    busstop6: "명지중고등학교"
+                    busstop6: ""
                 })
                 .then(function () {
                     console.log("Document successfully updated!");
@@ -1296,7 +1293,7 @@
 
             // 버스 예약 정보 저장 -> reservationBus
             return RbusDB.doc("11").update({
-                    busstop7: "명지대입구.서울무용센터"
+                    busstop7: ""
                 })
                 .then(function () {
                     console.log("Document successfully updated!");
@@ -1463,7 +1460,7 @@
             setInterval(() => {
                 this.readI()
 
-            }, 5000);
+            }, 10000);
         },
     };
 </script>
