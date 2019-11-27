@@ -44,21 +44,7 @@
                     <div class="treeview-item">
                       <a href="/busstop/" class="treeview-item-root panel-close">
                         <div class="treeview-item-content">
-                          <div class="treeview-item-label">7021번</div>
-                        </div>
-                      </a>
-                    </div>
-                    <div class="treeview-item">
-                      <a href="/busstop/" class="treeview-item-root panel-close">
-                        <div class="treeview-item-content">
-                          <div class="treeview-item-label">7022번</div>
-                        </div>
-                      </a>
-                    </div>
-                    <div class="treeview-item">
-                      <a href="/busstop/" class="treeview-item-root panel-close">
-                        <div class="treeview-item-content">
-                          <div class="treeview-item-label">7023번</div>
+                          <div class="treeview-item-label">7018번</div>
                         </div>
                       </a>
                     </div>
@@ -106,21 +92,11 @@
           <div class="block-inner">검색결과가 없습니다.</div>
         </div>
         <div class="searchbar-backdrop"></div>
-        <div class="button" @click="ex">버튼</div>
+
         <div id="map" style="width:100%;height:100%;"></div>
 
-        <script>
-          var self = this;
-          var app = self.$app;
-
-          var container = document.getElementById('map');
-          var options = {
-            center: new kakao.maps.LatLng(33.450701, 126.570667),
-            level: 3
-          };
-
-          var map = new kakao.maps.Map(container, options);
-        </script>
+        <!--<div id="map"></div>-->
+    
 
       </div>
     </div>
@@ -162,10 +138,16 @@
         console.log("먹힘");
       }
     },
+    on: {
+      pageInit(){
+
+      }
+    },
     mounted() { // mounted는 화면이 이동했을때 가장 처음 실행됨 (스튜디오의 oncreate문과 비슷)
 
       var self = this;
       var app = self.$app;
+      
       app.searchbar.create({
         el: '.searchbar',
         searchContainer: '.list',

@@ -34,16 +34,15 @@
         </div>
         <div class="page-content">
             <!-- Timeline -->
-            <form class="busData">
+            <form class="busData" id="busData">
                 <div class="timeline">
                     <!-- Timeline item with Card -->
                     <div class="timeline-item">
                         <div class="timeline-item-date"><small></small></div>
                         <div class="timeline-item-divider"></div>
                         <div class="timeline-item-content card">
-                            <a href="/reservation/" data-view=".view-main">
-                                <div class="button card-header b1"></div>
-                            </a>
+                            <div class="button card-header b1" @click="b1"></div>
+                            <div class="button card-header bg-color-green text-color-white b11" @click="b11"></div>
                             <div class="card-footer card-footer-padding i1">버스정보</div>
                         </div>
                     </div>
@@ -51,9 +50,8 @@
                         <div class="timeline-item-date"><small></small></div>
                         <div class="timeline-item-divider"></div>
                         <div class="timeline-item-content card">
-                            <a href="/reservation/" data-view=".view-main">
-                                <div class="button card-header b2"></div>
-                            </a>
+                            <div class="button card-header b2" @click="b2"></div>
+                            <div class="button card-header bg-color-green text-color-white b22" @click="b22"></div>
                             <div class="card-footer card-footer-padding i2">버스정보</div>
                         </div>
                     </div>
@@ -61,9 +59,8 @@
                         <div class="timeline-item-date"><small></small></div>
                         <div class="timeline-item-divider"></div>
                         <div class="timeline-item-content card">
-                            <a href="/reservation/" data-view=".view-main">
-                                <div class="button card-header b3"></div>
-                            </a>
+                            <div class="button card-header b3" @click="b3"></div>
+                            <div class="button card-header bg-color-green text-color-white b33" @click="b33"></div>
                             <div class="card-footer card-footer-padding i3">버스정보</div>
                         </div>
                     </div>
@@ -71,9 +68,8 @@
                         <div class="timeline-item-date"><small></small></div>
                         <div class="timeline-item-divider"></div>
                         <div class="timeline-item-content card">
-                            <a href="/reservation/" data-view=".view-main">
-                                <div class="button card-header b4"></div>
-                            </a>
+                            <div class="button card-header b4" @click="b4"></div>
+                            <div class="button card-header bg-color-green text-color-white b44" @click="b44"></div>
                             <div class="card-footer card-footer-padding i4">버스정보</div>
                         </div>
                     </div>
@@ -81,9 +77,8 @@
                         <div class="timeline-item-date"><small></small></div>
                         <div class="timeline-item-divider"></div>
                         <div class="timeline-item-content card">
-                            <a href="/reservation/" data-view=".view-main">
-                                <div class="button card-header b5"></div>
-                            </a>
+                            <div class="button card-header b5" @click="b5"></div>
+                            <div class="button card-header bg-color-green text-color-white b55" @click="b55"></div>
                             <div class="card-footer card-footer-padding i5">버스정보</div>
                         </div>
                     </div>
@@ -91,9 +86,8 @@
                         <div class="timeline-item-date"><small></small></div>
                         <div class="timeline-item-divider"></div>
                         <div class="timeline-item-content card">
-                            <a href="/reservation/" data-view=".view-main">
-                                <div class="button card-header b6"></div>
-                            </a>
+                            <div class="button card-header b6" @click="b6"></div>
+                            <div class="button card-header bg-color-green text-color-white b66" @click="b66"></div>
                             <div class="card-footer card-footer-padding i6">버스정보</div>
                         </div>
                     </div>
@@ -101,9 +95,8 @@
                         <div class="timeline-item-date"><small></small></div>
                         <div class="timeline-item-divider"></div>
                         <div class="timeline-item-content card">
-                            <a href="/reservation/" data-view=".view-main">
-                                <div class="button card-header b7"></div>
-                            </a>
+                            <div class="button card-header b7" @click="b7"></div>
+                            <div class="button card-header bg-color-green text-color-white b77" @click="b77"></div>
                             <div class="card-footer card-footer-padding i7">버스정보</div>
                         </div>
                     </div>
@@ -125,7 +118,6 @@
                 const self = this;
                 var app = self.$app;
 
-
                 // Create toast
                 if (!app.toastIcon) {
                     app.toastIcon = app.toast.create({
@@ -141,48 +133,11 @@
             refresh: function () {
                 setTimeout("location.reload(true);");
             },
-            LoginCheck() {
-                const self = this;
-                var app = self.$app;
-                var usersDB = firebase.firestore().collection("users");
-                var user = firebase.auth().currentUser;
-                var auth = firebase.auth();
-                var userEmail;
-
-                // 유저 데이터를 받아서 현재 접속되어 있는 유저의 email 데이터를 받음
-                // 받은 email데이터로 userDB의 email에 예약 정보를 저장
-                // 버스 상태에 따라(이미 지난 정류장 클릭x) 예약이 가능하게 버튼 활성화
-
-                firebase.auth().onAuthStateChanged((user) => {
-                    if (user) {
-                        // User is signed in.
-                        console.log(user.email)
-                        userEmail = user.email
-                        this.reservation(userEmail)
-
-                    } else {
-                        app.dialog.alert("로그인을 해주세요.");
-                    }
-                });
-            },
-            reservation(userEmail) {
-                var usersDB = firebase.firestore().collection("users");
-
-                return usersDB.doc(userEmail).update({
-                    reservation : 1111
-                  })
-                  .then(function () {
-                      console.log("완료")
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                  });
-            },
-            // 처음 한번만 실행해도 ok
-            readDB() {
+            readDB() { // 버스번호, 버스정류장 불러옴
                 var app = self.$app;
                 var busDB = firebase.firestore().collection("bus");
-                var b1, b2, b3, b4, b5, b6, b7, busTitle, i;
+                var b1, b2, b3, b4, b5, b6, b7, b11, b22, b33, b44, b55, b66, b77, busTitle, i;
+
                 busDB.doc("7018")
                     .get()
                     .then((doc) => {
@@ -193,6 +148,14 @@
                         b5 = doc.data().b5;
                         b6 = doc.data().b6;
                         b7 = doc.data().b7;
+                        b11 = doc.data().b1;
+                        b22 = doc.data().b2;
+                        b33 = doc.data().b3;
+                        b44 = doc.data().b4;
+                        b55 = doc.data().b5;
+                        b66 = doc.data().b6;
+                        b77 = doc.data().b7;
+
                         busTitle = doc.data().bus_num;
                         this.$el.find('.bus-title').text(busTitle + "번");
                         this.$el.find('.b1').text(b1);
@@ -202,6 +165,13 @@
                         this.$el.find('.b5').text(b5);
                         this.$el.find('.b6').text(b6);
                         this.$el.find('.b7').text(b7);
+                        this.$el.find('.b11').text(b1);
+                        this.$el.find('.b22').text(b2);
+                        this.$el.find('.b33').text(b3);
+                        this.$el.find('.b44').text(b4);
+                        this.$el.find('.b55').text(b5);
+                        this.$el.find('.b66').text(b6);
+                        this.$el.find('.b77').text(b7);
                         console.log("첫번째")
                     })
                     .catch(function (error) {
@@ -227,12 +197,12 @@
                         console.log("Error getting documents: ", error);
                     });
             },
-
             setBusStop(i) {
-
                 var app = self.$app;
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
                 var RbusDB = firebase.firestore().collection("reservationBus");
-
+                var userEmail = user.email;
 
                 // 계속해서 5초마다 새로고침하며 클래스에 적용
                 for (var j = 1; j < 8; j++) {
@@ -240,15 +210,20 @@
                     console.log("세번쨰")
                 }
                 this.$el.find('.i' + i).text("1111번");
+
+                
+
                 console.log("세번쨰 i = " + i)
                 console.log("세번쨰 반")
 
             },
             plusI(i) {
-
                 var app = self.$app;
                 var RbusDB = firebase.firestore().collection("reservationBus");
-                if (i > 4) {
+                var RbusDB = firebase.firestore().collection("reservationBus");
+
+
+                if (i > 7) {
                     // 값7 오버시 i를 1로 재설정
                     RbusDB.doc("1111").set({
                             empty: 1
@@ -263,7 +238,7 @@
                 } else {
                     // i 값을 +3씩 계속 업데이트 해줌
                     RbusDB.doc("1111").set({
-                            empty: i + 3
+                            empty: i + 1
                         })
                         .then(function () {
                             console.log("네번째 둘")
@@ -273,13 +248,1087 @@
                         });
 
                 }
+            },
+            b1: function () {
+                var self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var email, reservation;
+
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                    }
+                } else {
+                    // No user is signed in.
+                }
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        reservation = doc.data().reservation
+                        //console.log("reservation: " + reservation)
+
+                        if (reservation == 0) {
+                            app.dialog.confirm(
+                                // ok, cancel 선택지 alert
+                                '예약 하시겠습니까?',
+                                //ok 버튼
+                                function () {
+                                    app.dialog.alert('예약되었습니다.');
+
+                                    // 버튼 변경
+                                    self.$el.find('.b1').hide();
+                                    self.$el.find('.b11').show();
+
+                                    // 버스 예약 정보 저장 -> users
+                                    return usersDB.doc(email).update({
+                                            busstop1: "새절역.숭실고입구",
+                                            reservation: 1
+                                        })
+                                        .then(function () {
+                                            console.log("Document successfully updated!");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                    this.Reservation1();
+                                },
+                                //cancel 버튼
+                            );
+                        } else {
+                            console.log("없음")
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+
+            },
+            b11: function () {
+                var self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var email, reservation;
+
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                    }
+                } else {
+                    // No user is signed in.
+                }
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        reservation = doc.data().reservation
+                        console.log("reservation: " + reservation)
+
+                        if (reservation == 1) {
+                            app.dialog.confirm(
+                                // ok, cancel 선택지 alert
+                                '정말로 취소 하시겠습니까?',
+                                //ok 버튼
+                                function () {
+                                    app.dialog.alert('예약이 취소 되었습니다.');
+                                    self.$el.find('.b11').hide();
+                                    self.$el.find('.b1').show();
+
+                                    // 버스 예약 정보 저장
+                                    return usersDB.doc(email).update({
+                                            busstop1: "",
+                                            reservation: 0
+                                        })
+                                        .then(function () {
+                                            console.log("취소완료");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                    this.Reservation11();
+                                },
+                            );
+                        } else {
+                            app.dialog.alert('이미 예약이 된 상태');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+
+
+            },
+            b2: function () {
+                var self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var email, reservation;
+
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                    }
+                } else {
+                    // No user is signed in.
+                }
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        reservation = doc.data().reservation
+                        //console.log("reservation: " + reservation)
+
+                        if (reservation == 0) {
+                            app.dialog.confirm(
+                                // ok, cancel 선택지 alert
+                                '예약 하시겠습니까?',
+                                //ok 버튼
+                                function () {
+                                    app.dialog.alert('예약되었습니다.');
+
+                                    // 버튼 변경
+                                    self.$el.find('.b2').hide();
+                                    self.$el.find('.b22').show();
+
+                                    // 버스 예약 정보 저장 -> users
+                                    return usersDB.doc(email).update({
+                                            busstop2: "응암오거리",
+                                            reservation: 1
+                                        })
+                                        .then(function () {
+                                            console.log("Document successfully updated!");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                    this.Reservation2();
+                                },
+                                //cancel 버튼
+                            );
+                        } else {
+                            console.log("없음")
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+            },
+            b22: function () {
+                var self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var email, reservation;
+
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                    }
+                } else {
+                    // No user is signed in.
+                }
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        reservation = doc.data().reservation
+                        console.log("reservation: " + reservation)
+
+                        if (reservation == 1) {
+                            app.dialog.confirm(
+                                // ok, cancel 선택지 alert
+                                '정말로 취소 하시겠습니까?',
+                                //ok 버튼
+                                function () {
+                                    app.dialog.alert('예약이 취소 되었습니다.');
+                                    self.$el.find('.b22').hide();
+                                    self.$el.find('.b2').show();
+
+                                    // 버스 예약 정보 저장
+                                    return usersDB.doc(email).update({
+                                            busstop2: "",
+                                            reservation: 0
+                                        })
+                                        .then(function () {
+                                            console.log("취소완료");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                    this.Reservation22();
+                                },
+                            );
+                        } else {
+                            app.dialog.alert('이미 예약이 된 상태');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+            },
+            b3: function () {
+                var self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var email, reservation;
+
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                    }
+                } else {
+                    // No user is signed in.
+                }
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        reservation = doc.data().reservation
+                        //console.log("reservation: " + reservation)
+
+                        if (reservation == 0) {
+                            app.dialog.confirm(
+                                // ok, cancel 선택지 alert
+                                '예약 하시겠습니까?',
+                                //ok 버튼
+                                function () {
+                                    app.dialog.alert('예약되었습니다.');
+
+                                    // 버튼 변경
+                                    self.$el.find('.b3').hide();
+                                    self.$el.find('.b33').show();
+
+                                    // 버스 예약 정보 저장 -> users
+                                    return usersDB.doc(email).update({
+                                            busstop3: "응암오거리",
+                                            reservation: 1
+                                        })
+                                        .then(function () {
+                                            console.log("Document successfully updated!");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                    this.Reservation3();
+                                },
+                                //cancel 버튼
+                            );
+                        } else {
+                            console.log("없음")
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+            },
+            b33: function () {
+                var self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var email, reservation;
+
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                    }
+                } else {
+                    // No user is signed in.
+                }
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        reservation = doc.data().reservation
+                        console.log("reservation: " + reservation)
+
+                        if (reservation == 1) {
+                            app.dialog.confirm(
+                                // ok, cancel 선택지 alert
+                                '정말로 취소 하시겠습니까?',
+                                //ok 버튼
+                                function () {
+                                    app.dialog.alert('예약이 취소 되었습니다.');
+                                    self.$el.find('.b33').hide();
+                                    self.$el.find('.b3').show();
+
+                                    // 버스 예약 정보 저장
+                                    return usersDB.doc(email).update({
+                                            busstop3: "",
+                                            reservation: 0
+                                        })
+                                        .then(function () {
+                                            console.log("취소완료");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                    this.Reservation33();
+                                },
+                            );
+                        } else {
+                            app.dialog.alert('이미 예약이 된 상태');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+            },
+            b4: function () {
+                var self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var email, reservation;
+
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                    }
+                } else {
+                    // No user is signed in.
+                }
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        reservation = doc.data().reservation
+                        //console.log("reservation: " + reservation)
+
+                        if (reservation == 0) {
+                            app.dialog.confirm(
+                                // ok, cancel 선택지 alert
+                                '예약 하시겠습니까?',
+                                //ok 버튼
+                                function () {
+                                    app.dialog.alert('예약되었습니다.');
+
+                                    // 버튼 변경
+                                    self.$el.find('.b4').hide();
+                                    self.$el.find('.b44').show();
+
+                                    // 버스 예약 정보 저장 -> users
+                                    return usersDB.doc(email).update({
+                                            busstop4: "응암오거리",
+                                            reservation: 1
+                                        })
+                                        .then(function () {
+                                            console.log("Document successfully updated!");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                    this.Reservation4();
+                                },
+                                //cancel 버튼
+                            );
+                        } else {
+                            console.log("없음")
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+            },
+            b44: function () {
+                var self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var email, reservation;
+
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                    }
+                } else {
+                    // No user is signed in.
+                }
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        reservation = doc.data().reservation
+                        console.log("reservation: " + reservation)
+
+                        if (reservation == 1) {
+                            app.dialog.confirm(
+                                // ok, cancel 선택지 alert
+                                '정말로 취소 하시겠습니까?',
+                                //ok 버튼
+                                function () {
+                                    app.dialog.alert('예약이 취소 되었습니다.');
+                                    self.$el.find('.b44').hide();
+                                    self.$el.find('.b4').show();
+
+                                    // 버스 예약 정보 저장
+                                    return usersDB.doc(email).update({
+                                            busstop4: "",
+                                            reservation: 0
+                                        })
+                                        .then(function () {
+                                            console.log("취소완료");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                    this.Reservation44();
+                                },
+                            );
+                        } else {
+                            app.dialog.alert('이미 예약이 된 상태');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+            },
+            b5: function () {
+                var self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var email, reservation;
+
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                    }
+                } else {
+                    // No user is signed in.
+                }
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        reservation = doc.data().reservation
+                        //console.log("reservation: " + reservation)
+
+                        if (reservation == 0) {
+                            app.dialog.confirm(
+                                // ok, cancel 선택지 alert
+                                '예약 하시겠습니까?',
+                                //ok 버튼
+                                function () {
+                                    app.dialog.alert('예약되었습니다.');
+
+                                    // 버튼 변경
+                                    self.$el.find('.b5').hide();
+                                    self.$el.find('.b55').show();
+
+                                    // 버스 예약 정보 저장 -> users
+                                    return usersDB.doc(email).update({
+                                            busstop5: "응암오거리",
+                                            reservation: 1
+                                        })
+                                        .then(function () {
+                                            console.log("Document successfully updated!");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                    this.Reservation5();
+                                },
+                                //cancel 버튼
+                            );
+                        } else {
+                            console.log("없음")
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+            },
+            b55: function () {
+                var self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var email, reservation;
+
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                    }
+                } else {
+                    // No user is signed in.
+                }
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        reservation = doc.data().reservation
+                        console.log("reservation: " + reservation)
+
+                        if (reservation == 1) {
+                            app.dialog.confirm(
+                                // ok, cancel 선택지 alert
+                                '정말로 취소 하시겠습니까?',
+                                //ok 버튼
+                                function () {
+                                    app.dialog.alert('예약이 취소 되었습니다.');
+                                    self.$el.find('.b55').hide();
+                                    self.$el.find('.b5').show();
+
+                                    // 버스 예약 정보 저장
+                                    return usersDB.doc(email).update({
+                                            busstop5: "",
+                                            reservation: 0
+                                        })
+                                        .then(function () {
+                                            console.log("취소완료");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                    this.Reservation55();
+                                },
+                            );
+                        } else {
+                            app.dialog.alert('이미 예약이 된 상태');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+            },
+            b6: function () {
+                var self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var email, reservation;
+
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                    }
+                } else {
+                    // No user is signed in.
+                }
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        reservation = doc.data().reservation
+                        //console.log("reservation: " + reservation)
+
+                        if (reservation == 0) {
+                            app.dialog.confirm(
+                                // ok, cancel 선택지 alert
+                                '예약 하시겠습니까?',
+                                //ok 버튼
+                                function () {
+                                    app.dialog.alert('예약되었습니다.');
+
+                                    // 버튼 변경
+                                    self.$el.find('.b6').hide();
+                                    self.$el.find('.b66').show();
+
+                                    // 버스 예약 정보 저장 -> users
+                                    return usersDB.doc(email).update({
+                                            busstop6: "응암오거리",
+                                            reservation: 1
+                                        })
+                                        .then(function () {
+                                            console.log("Document successfully updated!");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                    this.Reservation6();
+                                },
+                                //cancel 버튼
+                            );
+                        } else {
+                            console.log("없음")
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+            },
+            b66: function () {
+                var self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var email, reservation;
+
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                    }
+                } else {
+                    // No user is signed in.
+                }
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        reservation = doc.data().reservation
+                        console.log("reservation: " + reservation)
+
+                        if (reservation == 1) {
+                            app.dialog.confirm(
+                                // ok, cancel 선택지 alert
+                                '정말로 취소 하시겠습니까?',
+                                //ok 버튼
+                                function () {
+                                    app.dialog.alert('예약이 취소 되었습니다.');
+                                    self.$el.find('.b66').hide();
+                                    self.$el.find('.b6').show();
+
+                                    // 버스 예약 정보 저장
+                                    return usersDB.doc(email).update({
+                                            busstop6: "",
+                                            reservation: 0
+                                        })
+                                        .then(function () {
+                                            console.log("취소완료");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                    this.Reservation66();
+                                },
+                            );
+                        } else {
+                            app.dialog.alert('이미 예약이 된 상태');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+            },
+            b7: function () {
+                var self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var email, reservation;
+
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                    }
+                } else {
+                    // No user is signed in.
+                }
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        reservation = doc.data().reservation
+                        //console.log("reservation: " + reservation)
+
+                        if (reservation == 0) {
+                            app.dialog.confirm(
+                                // ok, cancel 선택지 alert
+                                '예약 하시겠습니까?',
+                                //ok 버튼
+                                function () {
+                                    app.dialog.alert('예약되었습니다.');
+
+                                    // 버튼 변경
+                                    self.$el.find('.b7').hide();
+                                    self.$el.find('.b77').show();
+
+                                    // 버스 예약 정보 저장 -> users
+                                    return usersDB.doc(email).update({
+                                            busstop7: "응암오거리",
+                                            reservation: 1
+                                        })
+                                        .then(function () {
+                                            console.log("Document successfully updated!");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                    this.Reservation7();
+                                },
+                                //cancel 버튼
+                            );
+                        } else {
+                            console.log("없음")
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+            },
+            b77: function () {
+                var self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var email, reservation;
+
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                    }
+                } else {
+                    // No user is signed in.
+                }
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        reservation = doc.data().reservation
+                        console.log("reservation: " + reservation)
+
+                        if (reservation == 1) {
+                            app.dialog.confirm(
+                                // ok, cancel 선택지 alert
+                                '정말로 취소 하시겠습니까?',
+                                //ok 버튼
+                                function () {
+                                    app.dialog.alert('예약이 취소 되었습니다.');
+                                    self.$el.find('.b77').hide();
+                                    self.$el.find('.b7').show();
+
+                                    // 버스 예약 정보 저장
+                                    return usersDB.doc(email).update({
+                                            busstop7: "",
+                                            reservation: 0
+                                        })
+                                        .then(function () {
+                                            console.log("취소완료");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                    this.Reservation77();
+                                },
+                            );
+                        } else {
+                            app.dialog.alert('이미 예약이 된 상태');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
             }
         },
+        Reservation1() {
+            var self = this;
+            var app = self.$app;
+            var usersDB = firebase.firestore().collection("users");
+            var RbusDB = firebase.firestore().collection("reservationBus");
+
+            // 버스 예약 정보 저장 -> reservationBus
+            return RbusDB.doc("11").update({
+                    busstop1: "새절역.숭실고입구"
+                })
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        },
+        Reservation11() {
+            var self = this;
+            var app = self.$app;
+            var usersDB = firebase.firestore().collection("users");
+            var RbusDB = firebase.firestore().collection("reservationBus");
+
+            // 버스 예약 정보 저장 -> reservationBus
+            return RbusDB.doc("11").update({
+                    busstop1: ""
+                })
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        },
+        Reservation2() {
+            var self = this;
+            var app = self.$app;
+            var usersDB = firebase.firestore().collection("users");
+            var RbusDB = firebase.firestore().collection("reservationBus");
+
+            // 버스 예약 정보 저장 -> reservationBus
+            return RbusDB.doc("11").update({
+                    busstop2: "응암오거리"
+                })
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        },
+        Reservation22() {
+            var self = this;
+            var app = self.$app;
+            var usersDB = firebase.firestore().collection("users");
+            var RbusDB = firebase.firestore().collection("reservationBus");
+
+            // 버스 예약 정보 저장 -> reservationBus
+            return RbusDB.doc("11").update({
+                    busstop2: ""
+                })
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        },
+        Reservation3() {
+            var self = this;
+            var app = self.$app;
+            var usersDB = firebase.firestore().collection("users");
+            var RbusDB = firebase.firestore().collection("reservationBus");
+
+            // 버스 예약 정보 저장 -> reservationBus
+            return RbusDB.doc("11").update({
+                    busstop3: "은평문화예술정보학교"
+                })
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        },
+        Reservation33() {
+            var self = this;
+            var app = self.$app;
+            var usersDB = firebase.firestore().collection("users");
+            var RbusDB = firebase.firestore().collection("reservationBus");
+
+            // 버스 예약 정보 저장 -> reservationBus
+            return RbusDB.doc("11").update({
+                    busstop3: ""
+                })
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        },
+        Reservation4() {
+            var self = this;
+            var app = self.$app;
+            var usersDB = firebase.firestore().collection("users");
+            var RbusDB = firebase.firestore().collection("reservationBus");
+
+            // 버스 예약 정보 저장 -> reservationBus
+            return RbusDB.doc("11").update({
+                    busstop4: "응암초등학교"
+                })
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        },
+        Reservation44() {
+            var self = this;
+            var app = self.$app;
+            var usersDB = firebase.firestore().collection("users");
+            var RbusDB = firebase.firestore().collection("reservationBus");
+
+            // 버스 예약 정보 저장 -> reservationBus
+            return RbusDB.doc("11").update({
+                    busstop4: ""
+                })
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        },
+        Reservation5() {
+            var self = this;
+            var app = self.$app;
+            var usersDB = firebase.firestore().collection("users");
+            var RbusDB = firebase.firestore().collection("reservationBus");
+
+            // 버스 예약 정보 저장 -> reservationBus
+            return RbusDB.doc("11").update({
+                    busstop5: "명지전문대.충암중고등학교"
+                })
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        },
+        Reservation55() {
+            var self = this;
+            var app = self.$app;
+            var usersDB = firebase.firestore().collection("users");
+            var RbusDB = firebase.firestore().collection("reservationBus");
+
+            // 버스 예약 정보 저장 -> reservationBus
+            return RbusDB.doc("11").update({
+                    busstop5: ""
+                })
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        },
+        Reservation6() {
+            var self = this;
+            var app = self.$app;
+            var usersDB = firebase.firestore().collection("users");
+            var RbusDB = firebase.firestore().collection("reservationBus");
+
+            // 버스 예약 정보 저장 -> reservationBus
+            return RbusDB.doc("11").update({
+                    busstop6: "명지중고등학교"
+                })
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        },
+        Reservation66() {
+            var self = this;
+            var app = self.$app;
+            var usersDB = firebase.firestore().collection("users");
+            var RbusDB = firebase.firestore().collection("reservationBus");
+
+            // 버스 예약 정보 저장 -> reservationBus
+            return RbusDB.doc("11").update({
+                    busstop6: ""
+                })
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        },
+        Reservation7() {
+            var self = this;
+            var app = self.$app;
+            var usersDB = firebase.firestore().collection("users");
+            var RbusDB = firebase.firestore().collection("reservationBus");
+
+            // 버스 예약 정보 저장 -> reservationBus
+            return RbusDB.doc("11").update({
+                    busstop7: "명지대입구.서울무용센터"
+                })
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        },
+        Reservation77() {
+            var self = this;
+            var app = self.$app;
+            var usersDB = firebase.firestore().collection("users");
+            var RbusDB = firebase.firestore().collection("reservationBus");
+
+            // 버스 예약 정보 저장 -> reservationBus
+            return RbusDB.doc("11").update({
+                    busstop7: ""
+                })
+                .then(function () {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function (error) {
+                    // The document probably doesn't exist.
+                    console.error("Error updating document: ", error);
+                });
+        },
+
         on: {
             pageAfterOut() {
                 const self = this;
                 var app = self.$app;
-
 
                 app.toast.close();
 
@@ -292,14 +1341,129 @@
             },
         },
         mounted() {
+            var self = this;
+            var app = self.$app;
+            var usersDB = firebase.firestore().collection("users");
+
+            // busstop1 예약 여부에 따른 색 변경
+            usersDB.where("busstop1", "==", "")
+                .get()
+                .then((querySnapshot) => {
+                    console.log(querySnapshot.empty)
+                    if (querySnapshot.empty) { // 예약이 있을 때
+                        self.$el.find('.b1').hide();
+                        self.$el.find('.b11').show();
+                    } else {
+                        self.$el.find('.b11').hide();
+                        self.$el.find('.b1').show();
+                    }
+                })
+                .catch(function (error) {
+                    console.log("Error getting documents: ", error);
+                });
+            // busstop2 예약 여부에 따른 색 변경
+            usersDB.where("busstop2", "==", "")
+                .get()
+                .then((querySnapshot) => {
+                    console.log(querySnapshot.empty)
+                    if (querySnapshot.empty) { // 예약이 있을 때
+                        self.$el.find('.b2').hide();
+                        self.$el.find('.b22').show();
+                    } else {
+                        self.$el.find('.b22').hide();
+                        self.$el.find('.b2').show();
+                    }
+                })
+                .catch(function (error) {
+                    console.log("Error getting documents: ", error);
+                });
+            // busstop3 예약 여부에 따른 색 변경
+            usersDB.where("busstop3", "==", "")
+                .get()
+                .then((querySnapshot) => {
+                    console.log(querySnapshot.empty)
+                    if (querySnapshot.empty) { // 예약이 있을 때
+                        self.$el.find('.b3').hide();
+                        self.$el.find('.b33').show();
+                    } else {
+                        self.$el.find('.b33').hide();
+                        self.$el.find('.b3').show();
+                    }
+                })
+                .catch(function (error) {
+                    console.log("Error getting documents: ", error);
+                });
+            // busstop4 예약 여부에 따른 색 변경
+            usersDB.where("busstop4", "==", "")
+                .get()
+                .then((querySnapshot) => {
+                    console.log(querySnapshot.empty)
+                    if (querySnapshot.empty) { // 예약이 있을 때
+                        self.$el.find('.b4').hide();
+                        self.$el.find('.b44').show();
+                    } else {
+                        self.$el.find('.b44').hide();
+                        self.$el.find('.b4').show();
+                    }
+                })
+                .catch(function (error) {
+                    console.log("Error getting documents: ", error);
+                });
+            // busstop5 예약 여부에 따른 색 변경
+            usersDB.where("busstop5", "==", "")
+                .get()
+                .then((querySnapshot) => {
+                    console.log(querySnapshot.empty)
+                    if (querySnapshot.empty) { // 예약이 있을 때
+                        self.$el.find('.b5').hide();
+                        self.$el.find('.b55').show();
+                    } else {
+                        self.$el.find('.b55').hide();
+                        self.$el.find('.b5').show();
+                    }
+                })
+                .catch(function (error) {
+                    console.log("Error getting documents: ", error);
+                });
+            // busstop6 예약 여부에 따른 색 변경
+            usersDB.where("busstop6", "==", "")
+                .get()
+                .then((querySnapshot) => {
+                    console.log(querySnapshot.empty)
+                    if (querySnapshot.empty) { // 예약이 있을 때
+                        self.$el.find('.b6').hide();
+                        self.$el.find('.b66').show();
+                    } else {
+                        self.$el.find('.b66').hide();
+                        self.$el.find('.b6').show();
+                    }
+                })
+                .catch(function (error) {
+                    console.log("Error getting documents: ", error);
+                });
+            // busstop7 예약 여부에 따른 색 변경
+            usersDB.where("busstop7", "==", "")
+                .get()
+                .then((querySnapshot) => {
+                    console.log(querySnapshot.empty)
+                    if (querySnapshot.empty) { // 예약이 있을 때
+                        self.$el.find('.b7').hide();
+                        self.$el.find('.b77').show();
+                    } else {
+                        self.$el.find('.b77').hide();
+                        self.$el.find('.b7').show();
+                    }
+                })
+                .catch(function (error) {
+                    console.log("Error getting documents: ", error);
+                });
+
             this.readDB()
             this.readI()
-            this.LoginCheck()
             setInterval(() => {
                 this.readI()
 
             }, 5000);
         },
-
     };
 </script>
