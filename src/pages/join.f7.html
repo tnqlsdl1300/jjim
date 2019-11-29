@@ -177,25 +177,6 @@
                   console.log(error);
                 });
 
-              // 시작: 예약 디비 생성(여기 추가됐어)
-              RbusDB.doc(joinData.email).set({
-                  busstop1: "",
-                  busstop2: "",
-                  busstop3: "",
-                  busstop4: "",
-                  busstop5: "",
-                  busstop6: "",
-                  busstop7: "",
-                  checkR: 0
-                })
-                .then(function () {
-                  console.log("네번째 첫")
-                })
-                .catch(function (error) {
-                  console.log(error);
-                });
-              // 끝: 예약 디비 생성(여기 추가됐어)
-
             }).catch(function (error) {
               if (error.code == 'auth/invalid-email') {
                 app.dialog.alert('올바른 이메일을 입력하세요.');

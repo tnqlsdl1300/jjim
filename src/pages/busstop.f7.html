@@ -41,7 +41,7 @@
                         <div class="timeline-item-date"><small></small></div>
                         <div class="timeline-item-divider"></div>
                         <div class="timeline-item-content card">
-                            <div class="button card-header b1" @click="b1"></div>
+                            <div class="button card-header b1" @click="reservation(1)"></div>
                             <div class="button card-header bg-color-green text-color-white b11" @click="b11"></div>
                             <div class="card-footer card-footer-padding i1">버스정보</div>
                         </div>
@@ -50,7 +50,7 @@
                         <div class="timeline-item-date"><small></small></div>
                         <div class="timeline-item-divider"></div>
                         <div class="timeline-item-content card">
-                            <div class="button card-header b2" @click="b2"></div>
+                            <div class="button card-header b2" @click="reservation(2)"></div>
                             <div class="button card-header bg-color-green text-color-white b22" @click="b22"></div>
                             <div class="card-footer card-footer-padding i2">버스정보</div>
                         </div>
@@ -59,7 +59,7 @@
                         <div class="timeline-item-date"><small></small></div>
                         <div class="timeline-item-divider"></div>
                         <div class="timeline-item-content card">
-                            <div class="button card-header b3" @click="b3"></div>
+                            <div class="button card-header b3" @click="reservation(3)"></div>
                             <div class="button card-header bg-color-green text-color-white b33" @click="b33"></div>
                             <div class="card-footer card-footer-padding i3">버스정보</div>
                         </div>
@@ -68,7 +68,7 @@
                         <div class="timeline-item-date"><small></small></div>
                         <div class="timeline-item-divider"></div>
                         <div class="timeline-item-content card">
-                            <div class="button card-header b4" @click="b4"></div>
+                            <div class="button card-header b4" @click="reservation(4)"></div>
                             <div class="button card-header bg-color-green text-color-white b44" @click="b44"></div>
                             <div class="card-footer card-footer-padding i4">버스정보</div>
                         </div>
@@ -77,7 +77,7 @@
                         <div class="timeline-item-date"><small></small></div>
                         <div class="timeline-item-divider"></div>
                         <div class="timeline-item-content card">
-                            <div class="button card-header b5" @click="b5"></div>
+                            <div class="button card-header b5" @click="reservation(5)"></div>
                             <div class="button card-header bg-color-green text-color-white b55" @click="b55"></div>
                             <div class="card-footer card-footer-padding i5">버스정보</div>
                         </div>
@@ -86,7 +86,7 @@
                         <div class="timeline-item-date"><small></small></div>
                         <div class="timeline-item-divider"></div>
                         <div class="timeline-item-content card">
-                            <div class="button card-header b6" @click="b6"></div>
+                            <div class="button card-header b6" @click="reservation(6)"></div>
                             <div class="button card-header bg-color-green text-color-white b66" @click="b66"></div>
                             <div class="card-footer card-footer-padding i6">버스정보</div>
                         </div>
@@ -95,7 +95,7 @@
                         <div class="timeline-item-date"><small></small></div>
                         <div class="timeline-item-divider"></div>
                         <div class="timeline-item-content card">
-                            <div class="button card-header b7" @click="b7"></div>
+                            <div class="button card-header b7" @click="reservation(7)"></div>
                             <div class="button card-header bg-color-green text-color-white b77" @click="b77"></div>
                             <div class="card-footer card-footer-padding i7">버스정보</div>
                         </div>
@@ -146,25 +146,25 @@
                 firebase.auth().onAuthStateChanged((user) => {
                     if (user) {
                         // User is signed in.
-                        console.log(user.email)
+                        //console.log(user.email)
                         userEmail = user.email
-                        this.reservation(userEmail)
+                        this.reservationNum(userEmail)
                     } else {
                         app.dialog.alert("로그인을 해주세요.");
                     }
                 });
             },
-            reservation(userEmail) {
+            reservationNum(userEmail) {
                 var usersDB = firebase.firestore().collection("users");
                 return usersDB.doc(userEmail).update({
-                    reservation : 1111
-                  })
-                  .then(function () {
-                      console.log("완료")
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                  });
+                        reservation: 1
+                    })
+                    .then(function () {
+                        //console.log("완료")
+                    })
+                    .catch(function (error) {
+                        //console.log(error);
+                    });
             },
             readDB() { // 버스번호, 버스정류장 불러옴
                 var app = self.$app;
@@ -205,30 +205,72 @@
                         this.$el.find('.b55').text(b5);
                         this.$el.find('.b66').text(b6);
                         this.$el.find('.b77').text(b7);
-                        console.log("첫번째")
+                        //console.log("첫번째")
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
             },
             readI() {
+                var self = this
                 var app = self.$app;
                 var RbusDB = firebase.firestore().collection("reservationBus");
-                var i;
+                var usersDB = firebase.firestore().collection("users");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var i, email;
 
+                email = user.email;
+
+                console.log("readI")
                 // i 값을 db에서 읽음
-                RbusDB.doc("1111")
+                RbusDB.doc("11")
                     .get()
                     .then((doc) => {
                         i = doc.data().empty;
-                        console.log("두번쨰");
-                        this.setBusStop(i); // 세번째
-                        this.plusI(i); // 네번째
-                        console.log("------------------로테이션 끝----------------------")
+                        i++
+                        if (i > 7) {
+                            i = 1
+                        }
+                        console.log("두번쨰", i);
+                        // 세번째
+                        this.plusI(i);
+                        this.setBusStop(i); // 네번째
+                        console.log(doc.data(), i)
+                        if (doc.data()["busstop" + i] == 1) {
+                            console.log("먼저 실행")
+                            var updateObject = {}
+                            updateObject["busstop" + i] = 0
+                            RbusDB.doc("11").update(updateObject)
+                        }
+
+
+                        //console.log("------------------로테이션 끝----------------------")
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        console.log("유저 데이텅미: ", doc.data())
+                        if (doc.data()["busstop" + i] == 1) {
+                            console.log("마지막 실행 버스왓숨")
+                            var updateObject = {}
+                            var updateObject1 = {}
+                            updateObject["busstop" + i] = ""
+                            updateObject1["reservation"] = 0
+                            usersDB.doc(email).update(updateObject)
+                            usersDB.doc(email).update(updateObject1)
+                        }
+                    })
+                    .catch(function (error) {
+                        //console.log(error);
+                    });
+
+                this.$el.find('.b' + i + i).hide();
+                this.$el.find('.b' + i).show();
             },
             setBusStop(i) {
                 var app = self.$app;
@@ -237,44 +279,109 @@
                 // 계속해서 5초마다 새로고침하며 클래스에 적용
                 for (var j = 1; j < 8; j++) {
                     this.$el.find('.i' + j).text("");
-                    console.log("세번쨰")
+                    //console.log("세번쨰")
                 }
                 this.$el.find('.i' + i).text("1111번");
 
-                
 
-                console.log("세번쨰 i = " + i)
-                console.log("세번쨰 반")
+
+                //console.log("세번쨰 i = " + i)
+                //console.log("세번쨰 반")
 
             },
             plusI(i) {
+                console.log("plusI")
                 var app = self.$app;
                 var RbusDB = firebase.firestore().collection("reservationBus");
-                if (i > 7) {
-                    // 값7 오버시 i를 1로 재설정
-                    RbusDB.doc("1111").set({
-                            empty: 1
-                        })
-                        .then(function () {
-                            console.log("네번째 첫")
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
+                RbusDB.doc("11").get().then(result => {
+                    console.log(result.data())
+                    var data = result.data()
+                    data.empty = i
+                    RbusDB.doc("11").set(data)
+                })
+            },
+            reservation: function (position) {
+                var self = this;
+                var app = self.$app;
+                var usersDB = firebase.firestore().collection("users");
+                var RbusDB = firebase.firestore().collection("reservationBus");
+                var user = firebase.auth().currentUser;
+                var auth = firebase.auth();
+                var email, reservation, reservationC;
 
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                        console.log("이메일: ", email)
+                    }
                 } else {
-                    // i 값을 +3씩 계속 업데이트 해줌
-                    RbusDB.doc("1111").set({
-                            empty: i + 1
-                        })
-                        .then(function () {
-                            console.log("네번째 둘")
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-
+                    app.dialog.alert("로그인을 해주세요.");
                 }
+
+                usersDB.doc(email)
+                    .get()
+                    .then((doc) => {
+                        reservation = doc.data().reservation
+                        ////console.log("reservation: " + reservation)
+
+                        if (reservation == 0) {
+                            app.dialog.confirm(
+                                // ok, cancel 선택지 alert
+                                '예약 하시겠습니까?',
+                                //ok 버튼
+                                function () {
+                                    app.dialog.alert('예약되었습니다.');
+                                    console.log("이메일", email)
+
+                                    // 버튼 변경
+                                    self.$el.find('.b' + position).hide();
+                                    self.$el.find('.b' + position + position).show();
+
+                                    // 버스 예약 정보 저장 -> users
+                                    var updateObject = {}
+                                    var updateObject1 = {}
+                                    updateObject1["reservation"] = 1
+                                    updateObject["busstop" + position] = 1
+                                    RbusDB.doc("11").update(updateObject)
+                                    usersDB.doc(email).update(updateObject)
+                                        .then(function () {
+                                            //console.log("Document successfully updated!");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+                                    usersDB.doc(email).update(updateObject1)
+                                        .then(function () {
+                                            //console.log("Document successfully updated!");
+                                        })
+                                        .catch(function (error) {
+                                            // The document probably doesn't exist.
+                                            console.error("Error updating document: ", error);
+                                        });
+
+                                    // var usersDB = firebase.firestore().collection("users");
+                                    // usersDB.doc(email).update({
+                                    //         reservation: 1
+                                    //     })
+                                    //     .then(function () {
+
+                                    //     })
+                                    //     .catch(function (error) {
+                                    //         //console.log(error);
+                                    //     });
+                                },
+
+                                //cancel 버튼
+                            );
+                        } else {
+                            //console.log("없음")
+                        }
+                    })
+                    .catch(function (error) {
+                        //console.log("Error getting documents: ", error);
+                    });
             },
             b1: function () {
                 var self = this;
@@ -298,7 +405,7 @@
                     .get()
                     .then((doc) => {
                         reservation = doc.data().reservation
-                        //console.log("reservation: " + reservation)
+                        ////console.log("reservation: " + reservation)
 
                         if (reservation == 0) {
                             app.dialog.confirm(
@@ -318,7 +425,7 @@
                                             reservation: 1
                                         })
                                         .then(function () {
-                                            console.log("Document successfully updated!");
+                                            //console.log("Document successfully updated!");
                                         })
                                         .catch(function (error) {
                                             // The document probably doesn't exist.
@@ -329,11 +436,11 @@
                                 //cancel 버튼
                             );
                         } else {
-                            console.log("없음")
+                            //console.log("없음")
                         }
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
 
             },
@@ -359,7 +466,7 @@
                     .get()
                     .then((doc) => {
                         reservation = doc.data().reservation
-                        console.log("reservation: " + reservation)
+                        //console.log("reservation: " + reservation)
 
                         if (reservation == 1) {
                             app.dialog.confirm(
@@ -377,7 +484,7 @@
                                             reservation: 0
                                         })
                                         .then(function () {
-                                            console.log("취소완료");
+                                            //console.log("취소완료");
                                         })
                                         .catch(function (error) {
                                             // The document probably doesn't exist.
@@ -391,7 +498,7 @@
                         }
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
 
 
@@ -418,7 +525,7 @@
                     .get()
                     .then((doc) => {
                         reservation = doc.data().reservation
-                        //console.log("reservation: " + reservation)
+                        ////console.log("reservation: " + reservation)
 
                         if (reservation == 0) {
                             app.dialog.confirm(
@@ -438,7 +545,7 @@
                                             reservation: 1
                                         })
                                         .then(function () {
-                                            console.log("Document successfully updated!");
+                                            //console.log("Document successfully updated!");
                                         })
                                         .catch(function (error) {
                                             // The document probably doesn't exist.
@@ -449,11 +556,11 @@
                                 //cancel 버튼
                             );
                         } else {
-                            console.log("없음")
+                            //console.log("없음")
                         }
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
             },
             b22: function () {
@@ -478,7 +585,7 @@
                     .get()
                     .then((doc) => {
                         reservation = doc.data().reservation
-                        console.log("reservation: " + reservation)
+                        //console.log("reservation: " + reservation)
 
                         if (reservation == 1) {
                             app.dialog.confirm(
@@ -496,7 +603,7 @@
                                             reservation: 0
                                         })
                                         .then(function () {
-                                            console.log("취소완료");
+                                            //console.log("취소완료");
                                         })
                                         .catch(function (error) {
                                             // The document probably doesn't exist.
@@ -510,7 +617,7 @@
                         }
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
             },
             b3: function () {
@@ -535,7 +642,7 @@
                     .get()
                     .then((doc) => {
                         reservation = doc.data().reservation
-                        //console.log("reservation: " + reservation)
+                        ////console.log("reservation: " + reservation)
 
                         if (reservation == 0) {
                             app.dialog.confirm(
@@ -555,7 +662,7 @@
                                             reservation: 1
                                         })
                                         .then(function () {
-                                            console.log("Document successfully updated!");
+                                            //console.log("Document successfully updated!");
                                         })
                                         .catch(function (error) {
                                             // The document probably doesn't exist.
@@ -566,11 +673,11 @@
                                 //cancel 버튼
                             );
                         } else {
-                            console.log("없음")
+                            //console.log("없음")
                         }
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
             },
             b33: function () {
@@ -595,7 +702,7 @@
                     .get()
                     .then((doc) => {
                         reservation = doc.data().reservation
-                        console.log("reservation: " + reservation)
+                        //console.log("reservation: " + reservation)
 
                         if (reservation == 1) {
                             app.dialog.confirm(
@@ -613,7 +720,7 @@
                                             reservation: 0
                                         })
                                         .then(function () {
-                                            console.log("취소완료");
+                                            //console.log("취소완료");
                                         })
                                         .catch(function (error) {
                                             // The document probably doesn't exist.
@@ -627,7 +734,7 @@
                         }
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
             },
             b4: function () {
@@ -652,7 +759,7 @@
                     .get()
                     .then((doc) => {
                         reservation = doc.data().reservation
-                        //console.log("reservation: " + reservation)
+                        ////console.log("reservation: " + reservation)
 
                         if (reservation == 0) {
                             app.dialog.confirm(
@@ -672,7 +779,7 @@
                                             reservation: 1
                                         })
                                         .then(function () {
-                                            console.log("Document successfully updated!");
+                                            //console.log("Document successfully updated!");
                                         })
                                         .catch(function (error) {
                                             // The document probably doesn't exist.
@@ -683,11 +790,11 @@
                                 //cancel 버튼
                             );
                         } else {
-                            console.log("없음")
+                            //console.log("없음")
                         }
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
             },
             b44: function () {
@@ -712,7 +819,7 @@
                     .get()
                     .then((doc) => {
                         reservation = doc.data().reservation
-                        console.log("reservation: " + reservation)
+                        //console.log("reservation: " + reservation)
 
                         if (reservation == 1) {
                             app.dialog.confirm(
@@ -730,7 +837,7 @@
                                             reservation: 0
                                         })
                                         .then(function () {
-                                            console.log("취소완료");
+                                            //console.log("취소완료");
                                         })
                                         .catch(function (error) {
                                             // The document probably doesn't exist.
@@ -744,7 +851,7 @@
                         }
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
             },
             b5: function () {
@@ -769,7 +876,7 @@
                     .get()
                     .then((doc) => {
                         reservation = doc.data().reservation
-                        //console.log("reservation: " + reservation)
+                        ////console.log("reservation: " + reservation)
 
                         if (reservation == 0) {
                             app.dialog.confirm(
@@ -789,7 +896,7 @@
                                             reservation: 1
                                         })
                                         .then(function () {
-                                            console.log("Document successfully updated!");
+                                            //console.log("Document successfully updated!");
                                         })
                                         .catch(function (error) {
                                             // The document probably doesn't exist.
@@ -800,11 +907,11 @@
                                 //cancel 버튼
                             );
                         } else {
-                            console.log("없음")
+                            //console.log("없음")
                         }
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
             },
             b55: function () {
@@ -829,7 +936,7 @@
                     .get()
                     .then((doc) => {
                         reservation = doc.data().reservation
-                        console.log("reservation: " + reservation)
+                        //console.log("reservation: " + reservation)
 
                         if (reservation == 1) {
                             app.dialog.confirm(
@@ -847,7 +954,7 @@
                                             reservation: 0
                                         })
                                         .then(function () {
-                                            console.log("취소완료");
+                                            //console.log("취소완료");
                                         })
                                         .catch(function (error) {
                                             // The document probably doesn't exist.
@@ -861,7 +968,7 @@
                         }
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
             },
             b6: function () {
@@ -886,7 +993,7 @@
                     .get()
                     .then((doc) => {
                         reservation = doc.data().reservation
-                        //console.log("reservation: " + reservation)
+                        ////console.log("reservation: " + reservation)
 
                         if (reservation == 0) {
                             app.dialog.confirm(
@@ -906,7 +1013,7 @@
                                             reservation: 1
                                         })
                                         .then(function () {
-                                            console.log("Document successfully updated!");
+                                            //console.log("Document successfully updated!");
                                         })
                                         .catch(function (error) {
                                             // The document probably doesn't exist.
@@ -917,11 +1024,11 @@
                                 //cancel 버튼
                             );
                         } else {
-                            console.log("없음")
+                            //console.log("없음")
                         }
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
             },
             b66: function () {
@@ -946,7 +1053,7 @@
                     .get()
                     .then((doc) => {
                         reservation = doc.data().reservation
-                        console.log("reservation: " + reservation)
+                        //console.log("reservation: " + reservation)
 
                         if (reservation == 1) {
                             app.dialog.confirm(
@@ -964,7 +1071,7 @@
                                             reservation: 0
                                         })
                                         .then(function () {
-                                            console.log("취소완료");
+                                            //console.log("취소완료");
                                         })
                                         .catch(function (error) {
                                             // The document probably doesn't exist.
@@ -978,7 +1085,7 @@
                         }
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
             },
             b7: function () {
@@ -1003,7 +1110,7 @@
                     .get()
                     .then((doc) => {
                         reservation = doc.data().reservation
-                        //console.log("reservation: " + reservation)
+                        ////console.log("reservation: " + reservation)
 
                         if (reservation == 0) {
                             app.dialog.confirm(
@@ -1023,7 +1130,7 @@
                                             reservation: 1
                                         })
                                         .then(function () {
-                                            console.log("Document successfully updated!");
+                                            //console.log("Document successfully updated!");
                                         })
                                         .catch(function (error) {
                                             // The document probably doesn't exist.
@@ -1034,11 +1141,11 @@
                                 //cancel 버튼
                             );
                         } else {
-                            console.log("없음")
+                            //console.log("없음")
                         }
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
             },
             b77: function () {
@@ -1063,7 +1170,7 @@
                     .get()
                     .then((doc) => {
                         reservation = doc.data().reservation
-                        console.log("reservation: " + reservation)
+                        //console.log("reservation: " + reservation)
 
                         if (reservation == 1) {
                             app.dialog.confirm(
@@ -1081,7 +1188,7 @@
                                             reservation: 0
                                         })
                                         .then(function () {
-                                            console.log("취소완료");
+                                            //console.log("취소완료");
                                         })
                                         .catch(function (error) {
                                             // The document probably doesn't exist.
@@ -1095,7 +1202,7 @@
                         }
                     })
                     .catch(function (error) {
-                        console.log("Error getting documents: ", error);
+                        //console.log("Error getting documents: ", error);
                     });
             }
         },
@@ -1110,7 +1217,7 @@
                     busstop1: "새절역.숭실고입구"
                 })
                 .then(function () {
-                    console.log("Document successfully updated!");
+                    //console.log("Document successfully updated!");
                 })
                 .catch(function (error) {
                     // The document probably doesn't exist.
@@ -1128,7 +1235,7 @@
                     busstop1: ""
                 })
                 .then(function () {
-                    console.log("Document successfully updated!");
+                    //console.log("Document successfully updated!");
                 })
                 .catch(function (error) {
                     // The document probably doesn't exist.
@@ -1143,10 +1250,10 @@
 
             // 버스 예약 정보 저장 -> reservationBus
             return RbusDB.doc("11").update({
-                    busstop2: ""
+                    busstop2: "응암오거리"
                 })
                 .then(function () {
-                    console.log("Document successfully updated!");
+                    //console.log("Document successfully updated!");
                 })
                 .catch(function (error) {
                     // The document probably doesn't exist.
@@ -1161,10 +1268,10 @@
 
             // 버스 예약 정보 저장 -> reservationBus
             return RbusDB.doc("11").update({
-                    busstop2: ""
+                    busstop2: "응암오거리"
                 })
                 .then(function () {
-                    console.log("Document successfully updated!");
+                    //console.log("Document successfully updated!");
                 })
                 .catch(function (error) {
                     // The document probably doesn't exist.
@@ -1182,7 +1289,7 @@
                     busstop3: ""
                 })
                 .then(function () {
-                    console.log("Document successfully updated!");
+                    //console.log("Document successfully updated!");
                 })
                 .catch(function (error) {
                     // The document probably doesn't exist.
@@ -1200,7 +1307,7 @@
                     busstop3: ""
                 })
                 .then(function () {
-                    console.log("Document successfully updated!");
+                    //console.log("Document successfully updated!");
                 })
                 .catch(function (error) {
                     // The document probably doesn't exist.
@@ -1218,7 +1325,7 @@
                     busstop4: ""
                 })
                 .then(function () {
-                    console.log("Document successfully updated!");
+                    //console.log("Document successfully updated!");
                 })
                 .catch(function (error) {
                     // The document probably doesn't exist.
@@ -1236,7 +1343,7 @@
                     busstop4: ""
                 })
                 .then(function () {
-                    console.log("Document successfully updated!");
+                    //console.log("Document successfully updated!");
                 })
                 .catch(function (error) {
                     // The document probably doesn't exist.
@@ -1254,7 +1361,7 @@
                     busstop5: ""
                 })
                 .then(function () {
-                    console.log("Document successfully updated!");
+                    //console.log("Document successfully updated!");
                 })
                 .catch(function (error) {
                     // The document probably doesn't exist.
@@ -1272,7 +1379,7 @@
                     busstop5: ""
                 })
                 .then(function () {
-                    console.log("Document successfully updated!");
+                    //console.log("Document successfully updated!");
                 })
                 .catch(function (error) {
                     // The document probably doesn't exist.
@@ -1290,7 +1397,7 @@
                     busstop6: ""
                 })
                 .then(function () {
-                    console.log("Document successfully updated!");
+                    //console.log("Document successfully updated!");
                 })
                 .catch(function (error) {
                     // The document probably doesn't exist.
@@ -1308,7 +1415,7 @@
                     busstop6: ""
                 })
                 .then(function () {
-                    console.log("Document successfully updated!");
+                    //console.log("Document successfully updated!");
                 })
                 .catch(function (error) {
                     // The document probably doesn't exist.
@@ -1326,7 +1433,7 @@
                     busstop7: ""
                 })
                 .then(function () {
-                    console.log("Document successfully updated!");
+                    //console.log("Document successfully updated!");
                 })
                 .catch(function (error) {
                     // The document probably doesn't exist.
@@ -1344,7 +1451,7 @@
                     busstop7: ""
                 })
                 .then(function () {
-                    console.log("Document successfully updated!");
+                    //console.log("Document successfully updated!");
                 })
                 .catch(function (error) {
                     // The document probably doesn't exist.
@@ -1372,11 +1479,13 @@
             var app = self.$app;
             var usersDB = firebase.firestore().collection("users");
 
+            // this.LoginCheck()
+
             // busstop1 예약 여부에 따른 색 변경
             usersDB.where("busstop1", "==", "")
                 .get()
                 .then((querySnapshot) => {
-                    console.log(querySnapshot.empty)
+                    //console.log(querySnapshot.empty)
                     if (querySnapshot.empty) { // 예약이 있을 때
                         self.$el.find('.b1').hide();
                         self.$el.find('.b11').show();
@@ -1386,13 +1495,13 @@
                     }
                 })
                 .catch(function (error) {
-                    console.log("Error getting documents: ", error);
+                    //console.log("Error getting documents: ", error);
                 });
             // busstop2 예약 여부에 따른 색 변경
             usersDB.where("busstop2", "==", "")
                 .get()
                 .then((querySnapshot) => {
-                    console.log(querySnapshot.empty)
+                    //console.log(querySnapshot.empty)
                     if (querySnapshot.empty) { // 예약이 있을 때
                         self.$el.find('.b2').hide();
                         self.$el.find('.b22').show();
@@ -1402,13 +1511,13 @@
                     }
                 })
                 .catch(function (error) {
-                    console.log("Error getting documents: ", error);
+                    //console.log("Error getting documents: ", error);
                 });
             // busstop3 예약 여부에 따른 색 변경
             usersDB.where("busstop3", "==", "")
                 .get()
                 .then((querySnapshot) => {
-                    console.log(querySnapshot.empty)
+                    //console.log(querySnapshot.empty)
                     if (querySnapshot.empty) { // 예약이 있을 때
                         self.$el.find('.b3').hide();
                         self.$el.find('.b33').show();
@@ -1418,13 +1527,13 @@
                     }
                 })
                 .catch(function (error) {
-                    console.log("Error getting documents: ", error);
+                    //console.log("Error getting documents: ", error);
                 });
             // busstop4 예약 여부에 따른 색 변경
             usersDB.where("busstop4", "==", "")
                 .get()
                 .then((querySnapshot) => {
-                    console.log(querySnapshot.empty)
+                    //console.log(querySnapshot.empty)
                     if (querySnapshot.empty) { // 예약이 있을 때
                         self.$el.find('.b4').hide();
                         self.$el.find('.b44').show();
@@ -1434,13 +1543,13 @@
                     }
                 })
                 .catch(function (error) {
-                    console.log("Error getting documents: ", error);
+                    //console.log("Error getting documents: ", error);
                 });
             // busstop5 예약 여부에 따른 색 변경
             usersDB.where("busstop5", "==", "")
                 .get()
                 .then((querySnapshot) => {
-                    console.log(querySnapshot.empty)
+                    //console.log(querySnapshot.empty)
                     if (querySnapshot.empty) { // 예약이 있을 때
                         self.$el.find('.b5').hide();
                         self.$el.find('.b55').show();
@@ -1450,13 +1559,13 @@
                     }
                 })
                 .catch(function (error) {
-                    console.log("Error getting documents: ", error);
+                    //console.log("Error getting documents: ", error);
                 });
             // busstop6 예약 여부에 따른 색 변경
             usersDB.where("busstop6", "==", "")
                 .get()
                 .then((querySnapshot) => {
-                    console.log(querySnapshot.empty)
+                    //console.log(querySnapshot.empty)
                     if (querySnapshot.empty) { // 예약이 있을 때
                         self.$el.find('.b6').hide();
                         self.$el.find('.b66').show();
@@ -1466,13 +1575,13 @@
                     }
                 })
                 .catch(function (error) {
-                    console.log("Error getting documents: ", error);
+                    //console.log("Error getting documents: ", error);
                 });
             // busstop7 예약 여부에 따른 색 변경
             usersDB.where("busstop7", "==", "")
                 .get()
                 .then((querySnapshot) => {
-                    console.log(querySnapshot.empty)
+                    //console.log(querySnapshot.empty)
                     if (querySnapshot.empty) { // 예약이 있을 때
                         self.$el.find('.b7').hide();
                         self.$el.find('.b77').show();
@@ -1482,7 +1591,7 @@
                     }
                 })
                 .catch(function (error) {
-                    console.log("Error getting documents: ", error);
+                    //console.log("Error getting documents: ", error);
                 });
 
             this.readDB()
@@ -1490,7 +1599,7 @@
             setInterval(() => {
                 this.readI()
 
-            }, 10000);
+            }, 5000);
         },
     };
 </script>
