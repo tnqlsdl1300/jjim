@@ -263,14 +263,13 @@
                             updateObject1["reservation"] = 0
                             usersDB.doc(email).update(updateObject)
                             usersDB.doc(email).update(updateObject1)
+                            this.$el.find('.b' + i + i).hide();
+                            this.$el.find('.b' + i).show();
                         }
                     })
                     .catch(function (error) {
                         //console.log(error);
                     });
-
-                this.$el.find('.b' + i + i).hide();
-                this.$el.find('.b' + i).show();
             },
             setBusStop(i) {
                 var app = self.$app;

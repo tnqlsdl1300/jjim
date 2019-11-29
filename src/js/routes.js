@@ -5,8 +5,6 @@ import JoinPage from '../pages/join.f7.html'; // 회원가입
 import FindLoginPage from '../pages/find-login.f7.html';
 
 import BusStopPage from '../pages/busstop.f7.html';
-import ReservationPage from '../pages/reservation.f7.html';
-import CancelPage from '../pages/cancel.f7.html';
 
 
 var routes = [
@@ -19,20 +17,12 @@ var routes = [
     component: BusStopPage,
   },
   {
-    path: '/reservation/',
-    component: ReservationPage,
-  },
-  {
     path: '/login/',
     component: LoginPage,
   },
   {
     path: '/find-login/',
     component: FindLoginPage,
-  },
-  {
-    path: '/cancel/',
-    component: CancelPage,
   },
   {
     path: '/join/',
