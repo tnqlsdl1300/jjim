@@ -97,7 +97,17 @@ function login(){
 <script>
   
 
-  
+  var map;
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {
+        lat: 37.584919,
+        lng: 126.925144
+      },
+      zoom: 15
+    });
+  }
 </script>
 
 </html>

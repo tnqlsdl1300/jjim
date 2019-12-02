@@ -94,7 +94,7 @@
         <div id="map" style="width:100%;height:100%;"></div>
 
         <!--<div id="map"></div>-->
-
+    
 
       </div>
     </div>
@@ -137,7 +137,7 @@
       }
     },
     on: {
-      pageInit() {
+      pageInit(){
 
       }
     },
@@ -145,19 +145,7 @@
 
       var self = this;
       var app = self.$app;
-
-      var map;
-
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {
-            lat: 37.584919,
-            lng: 126.925144
-          },
-          zoom: 15
-        });
-      }
-
+      
       app.searchbar.create({
         el: '.searchbar',
         searchContainer: '.list',
