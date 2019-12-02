@@ -188,6 +188,7 @@
                 var i, email;
 
                 email = user.email;
+                
 
                 console.log("readI")
                 // i 값을 db에서 읽음
@@ -275,79 +276,17 @@
                 var auth = firebase.auth();
                 var email, reservation, reservationC;
 
-                // if (user) {
-                //     // User is signed in.
-                //     if (user != null) {
-                //         email = user.email;
-                //         console.log("이메일: ", email)
-                //     }
-                // } else {
-                //     app.dialog.alert("로그인을 해주세요.");
-                // }
+                if (user) {
+                    // User is signed in.
+                    if (user != null) {
+                        email = user.email;
+                        console.log("이메일: ", email)
+                    }
+                } else {
+                    app.dialog.alert("로그인을 해주세요.");
+                }
 
-                usersDB.doc(email)
-                    .get()
-                    .then((doc) => {
-                        reservation = doc.data().reservation
-                        ////console.log("reservation: " + reservation)
-
-                        if (reservation == 0) {
-                            app.dialog.confirm(
-                                // ok, cancel 선택지 alert
-                                '예약 하시겠습니까?',
-                                //ok 버튼
-                                function () {
-                                    app.dialog.alert('예약되었습니다.');
-                                    console.log("이메일", email)
-
-                                    // 버튼 변경
-                                    self.$el.find('.b' + position).hide();
-                                    self.$el.find('.b' + position + position).show();
-
-                                    // 버스 예약 정보 저장 -> users
-                                    var updateObject = {}
-                                    var updateObject1 = {}
-                                    updateObject1["reservation"] = 1
-                                    updateObject["busstop" + position] = 1
-                                    RbusDB.doc("11").update(updateObject)
-                                    usersDB.doc(email).update(updateObject)
-                                        .then(function () {
-                                            //console.log("Document successfully updated!");
-                                        })
-                                        .catch(function (error) {
-                                            // The document probably doesn't exist.
-                                            console.error("Error updating document: ", error);
-                                        });
-                                    usersDB.doc(email).update(updateObject1)
-                                        .then(function () {
-                                            //console.log("Document successfully updated!");
-                                        })
-                                        .catch(function (error) {
-                                            // The document probably doesn't exist.
-                                            console.error("Error updating document: ", error);
-                                        });
-
-                                    // var usersDB = firebase.firestore().collection("users");
-                                    // usersDB.doc(email).update({
-                                    //         reservation: 1
-                                    //     })
-                                    //     .then(function () {
-
-                                    //     })
-                                    //     .catch(function (error) {
-                                    //         //console.log(error);
-                                    //     });
-                                },
-
-                                //cancel 버튼
-                            );
-                        } else {
-                            //console.log("없음")
-                        }
-                    })
-                    .catch(function (error) {
-                        //console.log("Error getting documents: ", error);
-                    });
+              
             },
             b1: function () {
                 var self = this;
