@@ -130,6 +130,21 @@
                 // Open it
                 app.toastIcon.open();
             },
+            showBusGone() {
+                const self = this;
+                var app = self.$app;
+
+                // Create toast
+                if (!app.toastIcon) {
+                    app.toastIcon = app.toast.create({
+                        text: '버스가 도착하였습니다.',
+                        position: 'center',
+                        closeTimeout: 1000,
+                    });
+                }
+                // Open it
+                app.toastIcon.open();
+            },
             refresh: function () {
                 setTimeout("location.reload(true);");
             },
@@ -231,6 +246,8 @@
                                     var updateObject1 = {}
                                     updateObject["busstop" + i] = ""
                                     updateObject1["reservation"] = 0
+                                    // app.dialog.alert("버스가 도착하였습니다.");
+                                    this.showBusGone();
                                     usersDB.doc(email).update(updateObject)
                                     usersDB.doc(email).update(updateObject1)
                                     this.$el.find('.b' + i + i).hide();
