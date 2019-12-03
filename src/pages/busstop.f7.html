@@ -122,7 +122,7 @@
                 if (!app.toastIcon) {
                     app.toastIcon = app.toast.create({
                         icon: app.$theme ? '<i class="icons">start</i>' : '<i class="material-icons">start</i>',
-                        text: 'I\'m on center',
+                        text: '이미 추가된 버스입니다.',
                         position: 'center',
                         closeTimeout: 1000,
                     });
@@ -187,56 +187,92 @@
                 var auth = firebase.auth();
                 var i, email;
 
-                email = user.email;
+                firebase.auth().onAuthStateChanged((user) => {
+                    if (user) {
 
-                console.log("readI")
-                // i 값을 db에서 읽음
-                RbusDB.doc("11")
-                    .get()
-                    .then((doc) => {
-                        i = doc.data().empty;
-                        i++
-                        if (i > 7) {
-                            i = 1
-                        }
-                        console.log("두번쨰", i);
-                        // 세번째
-                        this.plusI(i);
-                        this.setBusStop(i); // 네번째
-                        console.log(doc.data(), i)
-                        if (doc.data()["busstop" + i] == 1) {
-                            console.log("먼저 실행")
-                            var updateObject = {}
-                            updateObject["busstop" + i] = 0
-                            RbusDB.doc("11").update(updateObject)
-                        }
+                        email = user.email;
+
+                        console.log("readI email = " + email)
+                        // i 값을 db에서 읽음
+                        RbusDB.doc("11")
+                            .get()
+                            .then((doc) => {
+                                i = doc.data().empty;
+                                i++
+                                if (i > 7) {
+                                    i = 1
+                                }
+                                console.log("두번쨰", i);
+                                // 세번째
+                                this.plusI(i);
+                                this.setBusStop(i); // 네번째
+                                console.log(doc.data(), i)
+                                if (doc.data()["busstop" + i] == 1) {
+                                    console.log("먼저 실행")
+                                    var updateObject = {}
+                                    updateObject["busstop" + i] = 0
+                                    RbusDB.doc("11").update(updateObject)
+                                }
 
 
-                        //console.log("------------------로테이션 끝----------------------")
-                    })
-                    .catch(function (error) {
-                        //console.log("Error getting documents: ", error);
-                    });
+                                //console.log("------------------로테이션 끝----------------------")
+                            })
+                            .catch(function (error) {
+                                //console.log("Error getting documents: ", error);
+                            });
 
-                usersDB.doc(email)
-                    .get()
-                    .then((doc) => {
-                        console.log("유저 데이텅미: ", doc.data())
-                        if (doc.data()["busstop" + i] == 1) {
-                            console.log("마지막 실행 버스왓숨")
-                            var updateObject = {}
-                            var updateObject1 = {}
-                            updateObject["busstop" + i] = ""
-                            updateObject1["reservation"] = 0
-                            usersDB.doc(email).update(updateObject)
-                            usersDB.doc(email).update(updateObject1)
-                            this.$el.find('.b' + i + i).hide();
-                            this.$el.find('.b' + i).show();
-                        }
-                    })
-                    .catch(function (error) {
-                        //console.log(error);
-                    });
+                        usersDB.doc(email)
+                            .get()
+                            .then((doc) => {
+                                console.log("유저 데이텅미: ", doc.data())
+                                if (doc.data()["busstop" + i] == 1) {
+                                    console.log("마지막 실행 버스왓숨")
+                                    var updateObject = {}
+                                    var updateObject1 = {}
+                                    updateObject["busstop" + i] = ""
+                                    updateObject1["reservation"] = 0
+                                    usersDB.doc(email).update(updateObject)
+                                    usersDB.doc(email).update(updateObject1)
+                                    this.$el.find('.b' + i + i).hide();
+                                    this.$el.find('.b' + i).show();
+                                }
+                            })
+                            .catch(function (error) {
+                                //console.log(error);
+                            });
+
+                    } else {
+                        console.log("로그인해라")
+                        RbusDB.doc("11")
+                            .get()
+                            .then((doc) => {
+                                i = doc.data().empty;
+                                i++
+                                if (i > 7) {
+                                    i = 1
+                                }
+                                console.log("두번쨰", i);
+                                // 세번째
+                                this.plusI(i);
+                                this.setBusStop(i); // 네번째
+                                console.log(doc.data(), i)
+                                if (doc.data()["busstop" + i] == 1) {
+                                    console.log("먼저 실행")
+                                    var updateObject = {}
+                                    updateObject["busstop" + i] = 0
+                                    RbusDB.doc("11").update(updateObject)
+                                }
+
+
+                                //console.log("------------------로테이션 끝----------------------")
+                            })
+                            .catch(function (error) {
+                                //console.log("Error getting documents: ", error);
+                            });
+                    }
+                });
+
+
             },
             setBusStop(i) {
                 var app = self.$app;
@@ -342,7 +378,7 @@
                                 //cancel 버튼
                             );
                         } else {
-                            //console.log("없음")
+                            app.dialog.alert('이미 예약이 되어있습니다.');
                         }
                     })
                     .catch(function (error) {
